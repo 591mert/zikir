@@ -1,0 +1,36 @@
+# Bağımlılıklar (asla GitHub'a yüklenmemeli — Netlify kendisi kurar)
+node_modules/
+.pnp
+.pnp.js
+
+# Build çıktısı
+dist/
+dist-ssr/
+*.local
+
+# Loglar
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Ortam değişkenleri (gizli anahtarlar)
+.env
+.env.*
+!.env.example
+
+# Editör ve sistem
+.DS_Store
+.idea/
+.vscode/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+Thumbs.db
+
+# Netlify
+.netlify/

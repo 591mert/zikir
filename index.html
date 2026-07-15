@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="tr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
+    <meta name="theme-color" content="#0d5c46" />
+    <meta name="description" content="Zikir - Yaşlılar için kolay ve anlaşılır İslami uygulama: namaz vakitleri ve hatırlatma, kıble, tesbih, Kur'an, dualar ve Esmâül Hüsnâ." />
+
+    <!-- PWA: Manifest -->
+    <link rel="manifest" href="./manifest.webmanifest" />
+
+    <!-- iOS / Apple: ana ekrana ekle desteği -->
+    <link rel="apple-touch-icon" href="./icon-512.png" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="Nûr" />
+
+    <!-- Microsoft tile -->
+    <meta name="msapplication-TileColor" content="#0d5c46" />
+    <meta name="msapplication-tap-highlight" content="no" />
+
+    <link rel="icon" type="image/png" href="./icon-512.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Nunito:wght@400;500;600;700;800;900&family=Scheherazade+New:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <title>Zikir · İslamî Rehber</title>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+    <!-- PWA: Service Worker kaydı (çevrimdışı destek) -->
+    <script>
+      if ("serviceWorker" in navigator) {
+        window.addEventListener("load", function () {
+          navigator.serviceWorker.register("./sw.js").catch(function () {});
+        });
+      }
+    </script>
+  </body>
+</html>

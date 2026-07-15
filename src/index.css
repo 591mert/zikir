@@ -1,0 +1,100 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Nunito", ui-sans-serif, system-ui, sans-serif;
+  --font-arabic: "Amiri", "Scheherazade New", serif;
+
+  --color-nuur-50: #f0f7f3;
+  --color-nuur-100: #dcefe4;
+  --color-nuur-200: #b9ddc9;
+  --color-nuur-300: #8bc4a6;
+  --color-nuur-400: #57a47d;
+  --color-nuur-500: #34865f;
+  --color-nuur-600: #236b4c;
+  --color-nuur-700: #1a563e;
+  --color-nuur-800: #0d5c46;
+  --color-nuur-900: #0a3d2f;
+
+  --color-gold-300: #e8cd7f;
+  --color-gold-400: #d9b34d;
+  --color-gold-500: #c9a227;
+  --color-gold-600: #a9851b;
+
+  --color-cream: #fbf7ee;
+}
+
+html {
+  /* Yaşlılar için temel yazı boyutu büyük tutulur */
+  font-size: 18px;
+  -webkit-text-size-adjust: 100%;
+}
+
+/* Yazı boyutu ölçekleme (erişilebilirlik) */
+html[data-scale="lg"] {
+  font-size: 20px;
+}
+html[data-scale="xl"] {
+  font-size: 22px;
+}
+
+body {
+  margin: 0;
+  background-color: var(--color-cream);
+  color: #1c2b22;
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+  text-wrap: pretty;
+}
+
+.font-arabic {
+  font-family: var(--font-arabic);
+  line-height: 2.1;
+}
+
+/* Yumuşak kaydırma geçişi */
+* {
+  -webkit-tap-highlight-color: transparent;
+}
+
+button {
+  font-family: inherit;
+}
+
+/* Büyük dokunma alanları için odak halkası */
+:focus-visible {
+  outline: 3px solid var(--color-gold-500);
+  outline-offset: 2px;
+}
+
+@keyframes nuu-fade {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.animate-fade {
+  animation: nuu-fade 0.35s ease-out;
+}
+
+@keyframes nuu-pulse-ring {
+  0% {
+    transform: scale(0.95);
+    opacity: 0.7;
+  }
+  50% {
+    transform: scale(1.04);
+    opacity: 0.3;
+  }
+  100% {
+    transform: scale(0.95);
+    opacity: 0.7;
+  }
+}
+.animate-pulse-ring {
+  animation: nuu-pulse-ring 2.4s ease-in-out infinite;
+}
