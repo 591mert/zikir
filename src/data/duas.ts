@@ -112,42 +112,50 @@ export const shortCategory: DuaCategory = {
       title: "Her İşte Besmele",
       arabic: "بِسْمِ اللّٰهِ",
       meaning: "Allah'ın adıyla. (Her işin başında okunur.)",
+      audioUrl: "/audio/kisa/besmele.mp3",
     },
     {
       title: "İstiğfar",
       arabic: "اَسْتَغْفِرُ اللّٰهَ",
       meaning: "Allah'tan bağışlanma dilerim.",
+      audioUrl: "/audio/kisa/istigfar.mp3",
     },
     {
       title: "Şükür Duası",
       arabic: "اَلْحَمْدُ لِلّٰهِ",
       meaning: "Hamd Allah'a olsun. (Bir nimete kavuşunca.)",
+      audioUrl: "/audio/kisa/sukur-duasi.mp3",
     },
     {
       title: "Tehlil (Tevhid)",
       arabic: "لَٓا اِلٰهَ اِلَّا اللّٰهُ",
       meaning: "Allah'tan başka ilâh yoktur.",
+      audioUrl: "/audio/kisa/tehlil.mp3",
     },
     {
       title: "Sözünün Dinlenmesi İçin",
       arabic: "صَدَقَ اللّٰهُ الْعَظ۪يمُ",
       meaning: "Yüce Allah doğru söylemiştir. (Kur'an okuduktan sonra.)",
+      audioUrl: "/audio/kisa/sadakallah.mp3",
     },
     {
       title: "Yeni İşe Başlarken",
       arabic: "بِسْمِ اللّٰهِ تَوَكَّلْتُ عَلَى اللّٰهِ لَا حَوْلَ وَلَا قُوَّةَ اِلَّا بِاللّٰهِ",
       meaning:
         "Allah'ın adıyla, Allah'a tevekkül ettim. Güç ve kuvvet ancak Allah iledir.",
+      audioUrl: "/audio/kisa/yeni-ise-baslarken.mp3",
     },
     {
       title: "Bir Şey Unuttuğunda",
       arabic: "اللّٰهُمَّ لَٓا يَسْهُلُ اِلَّا مَا جَعَلْتَهُ سَهْلًا",
       meaning: "Allah'ım! Senin kolay kıldığından başka kolaylık yoktur.",
+      audioUrl: "/audio/kisa/unutunca.mp3",
     },
     {
       title: "Güzel Söz",
       arabic: "حَسْبُنَا اللّٰهُ وَنِعْمَ الْوَك۪يلُ",
       meaning: "Bize Allah yeter. O ne güzel vekildir.",
+      audioUrl: "/audio/kisa/guzel-soz.mp3",
     },
   ],
 };
