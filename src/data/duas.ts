@@ -113,16 +113,19 @@ export const shortCategory: DuaCategory = {
       title: "Şükür Duası",
       arabic: "اَلْحَمْدُ لِلّٰهِ",
       meaning: "Hamd Allah'a olsun. (Bir nimete kavuşunca.)",
+      audioRef: "1:2",
     },
     {
       title: "Tehlil (Tevhid)",
       arabic: "لَٓا اِلٰهَ اِلَّا اللّٰهُ",
       meaning: "Allah'tan başka ilâh yoktur.",
+      audioRef: "47:19",
     },
     {
       title: "Sözünün Dinlenmesi İçin",
       arabic: "صَدَقَ اللّٰهُ الْعَظ۪يمُ",
       meaning: "Yüce Allah doğru söylemiştir. (Kur'an okuduktan sonra.)",
+      audioRef: "3:95",
     },
     {
       title: "Yeni İşe Başlarken",
