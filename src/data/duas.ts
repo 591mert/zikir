@@ -31,6 +31,7 @@ export const prayerCategory: DuaCategory = {
       arabic: "اَللّٰهُ اَكْبَرُ",
       meaning:
         "Allah en büyüktür. (Namaza başlarken eller kaldırılırken ve her rükû/secdede okunur.)",
+      audioRef: "22:62",
     },
     {
       title: "Sübhâneke (İftitah Duası)",
@@ -38,6 +39,7 @@ export const prayerCategory: DuaCategory = {
         "سُبْحَانَكَ اللّٰهُمَّ وَبِحَمْدِكَ وَتَبَارَكَ اسْمُكَ وَتَعَالٰى جَدُّكَ وَلَٓا اِلٰهَ غَيْرُكَ",
       meaning:
         "Allah'ım! Seni hamdinle tesbih ve takdis ederim. Senin adın mübarektir. Senin şanın yücedir. Senden başka ilâh yoktur.",
+      audioRef: "2:32",
     },
     {
       title: "Fâtiha Sûresi",
@@ -60,6 +62,7 @@ export const prayerCategory: DuaCategory = {
         "اَللّٰهُمَّ صَلِّ عَلٰى مُحَمَّدٍ وَعَلٰى اٰلِ مُحَمَّدٍ كَمَا صَلَّيْتَ عَلٰى اِبْرَاه۪يمَ وَعَلٰى اٰلِ اِبْرَاه۪يمَ اِنَّكَ حَم۪يدٌ مَج۪يدٌ",
       meaning:
         "Allah'ım! Muhammed'e ve Muhammed'in âline, İbrahim'e ve İbrahim'in âline salat ettiğin gibi salat eyle. Şüphesiz Sen, hamde lâyık ve şanı yüce olansın.",
+      audioRef: "33:56",
     },
     {
       title: "Allâhümme Bârik (Salavat)",
@@ -67,6 +70,7 @@ export const prayerCategory: DuaCategory = {
         "اَللّٰهُمَّ بَارِكْ عَلٰى مُحَمَّدٍ وَعَلٰى اٰلِ مُحَمَّدٍ كَمَا بَارَكْتَ عَلٰى اِبْرَاه۪يمَ وَعَلٰى اٰلِ اِبْرَاه۪يمَ اِنَّكَ حَم۪يدٌ مَج۪يدٌ",
       meaning:
         "Allah'ım! Muhammed'e ve Muhammed'in âline, İbrahim'e ve İbrahim'in âline bereket ihsan ettiğin gibi bereket ihsan eyle. Şüphesiz Sen, hamde lâyık ve şanı yüce olansın.",
+      audioRef: "33:56",
     },
     {
       title: "Kunut Duâsı",
@@ -80,6 +84,7 @@ export const prayerCategory: DuaCategory = {
       arabic: "اَلسَّلَامُ عَلَيْكُمْ وَرَحْمَةُ اللّٰهِ",
       meaning:
         "Selâm ve Allah'ın rahmeti üzerinize olsun. (Sağa ve sonra sola dönülerek okunur; namaz böyle tamamlanır.)",
+      audioRef: "6:54",
     },
     {
       title: "Namazdan Sonra Tesbihat",
@@ -87,6 +92,7 @@ export const prayerCategory: DuaCategory = {
         "سُبْحَانَ اللّٰهِ ×٣٣ وَالْحَمْدُ لِلّٰهِ ×٣٣ وَاللّٰهُ اَكْبَرُ ×٣٤ لَٓا اِلٰهَ اِلَّا اللّٰهُ وَحْدَهُ لَا شَر۪يكَ لَهُ لَهُ الْمُلْكُ وَلَهُ الْحَمْدُ وَهُوَ عَلٰى كُلِّ شَيْءٍ قَد۪يرٌ",
       meaning:
         "Sübhânallah (33), Elhamdülillâh (33), Allâhu Ekber (34) denir. Sonra: 'Allah'tan başka ilâh yoktur. O tektir, ortağı yoktur. Mülk O'nundur, hamd O'nadır ve O her şeye kâdirdir' denir.",
+      audioRef: "1:2",
     },
   ],
 };
@@ -108,6 +114,7 @@ export const shortCategory: DuaCategory = {
       title: "İstiğfar",
       arabic: "اَسْتَغْفِرُ اللّٰهَ",
       meaning: "Allah'tan bağışlanma dilerim.",
+      audioRef: "4:106",
     },
     {
       title: "Şükür Duası",
@@ -132,11 +139,13 @@ export const shortCategory: DuaCategory = {
       arabic: "بِسْمِ اللّٰهِ تَوَكَّلْتُ عَلَى اللّٰهِ لَا حَوْلَ وَلَا قُوَّةَ اِلَّا بِاللّٰهِ",
       meaning:
         "Allah'ın adıyla, Allah'a tevekkül ettim. Güç ve kuvvet ancak Allah iledir.",
+      audioRef: "65:3",
     },
     {
       title: "Bir Şey Unuttuğunda",
       arabic: "اللّٰهُمَّ لَٓا يَسْهُلُ اِلَّا مَا جَعَلْتَهُ سَهْلًا",
       meaning: "Allah'ım! Senin kolay kıldığından başka kolaylık yoktur.",
+      audioRef: "2:185",
     },
     {
       title: "Güzel Söz",
@@ -164,12 +173,13 @@ export const duaCategories: DuaCategory[] = [
           "Rahmân ve Rahîm olan Allah'ın adıyla. (Her hayırlı işe başlarken okunur.)",
         audioRef: "1:1",
       },
-      {
-        title: "İşe Başlarken",
-        arabic: "اللّٰهُمَّ بَارِكْ لَنَا ف۪يمَا رَزَقْتَنَا",
-        meaning:
-          "Allah'ım! Bize rızık olarak verdiklerin hakkında bereket ihsan eyle.",
-      },
+    {
+      title: "İşe Başlarken",
+      arabic: "اللّٰهُمَّ بَارِكْ لَنَا ف۪يمَا رَزَقْتَنَا",
+      meaning:
+        "Allah'ım! Bize rızık olarak verdiklerin hakkında bereket ihsan eyle.",
+      audioRef: "7:96",
+    },
     ],
   },
   {
@@ -178,17 +188,19 @@ export const duaCategories: DuaCategory[] = [
     icon: "🍽️",
     description: "Yemekten önce ve sonra",
     duas: [
-      {
-        title: "Yemeğe Başlarken",
-        arabic: "بِسْمِ اللّٰهِ اَوَّلَهُ وَاٰخِرَهُ",
-        meaning: "Başında da sonunda da Allah'ın adıyla.",
-      },
-      {
-        title: "Yemekten Sonra",
-        arabic: "اَلْحَمْدُ لِلّٰهِ الَّذ۪ي اَطْعَمَنَا وَسَقَانَا وَجَعَلَنَا مُسْلِم۪ينَ",
-        meaning:
-          "Bizi yediren, içiren ve bizi Müslümanlardan kılan Allah'a hamdolsun.",
-      },
+    {
+      title: "Yemeğe Başlarken",
+      arabic: "بِسْمِ اللّٰهِ اَوَّلَهُ وَاٰخِرَهُ",
+      meaning: "Başında da sonunda da Allah'ın adıyla.",
+      audioRef: "6:118",
+    },
+    {
+      title: "Yemekten Sonra",
+      arabic: "اَلْحَمْدُ لِلّٰهِ الَّذ۪ي اَطْعَمَنَا وَسَقَانَا وَجَعَلَنَا مُسْلِم۪ينَ",
+      meaning:
+        "Bizi yediren, içiren ve bizi Müslümanlardan kılan Allah'a hamdolsun.",
+      audioRef: "26:79",
+    },
     ],
   },
   {
@@ -197,17 +209,19 @@ export const duaCategories: DuaCategory[] = [
     icon: "🌙",
     description: "Yatarken ve kalkarken",
     duas: [
-      {
-        title: "Uyumadan Önce",
-        arabic: "بِاسْمِكَ اللّٰهُمَّ اَمُوتُ وَاَحْيَا",
-        meaning: "Allah'ım! Senin isminle ölür ve senin isminle dirilirim.",
-      },
-      {
-        title: "Uyanınca",
-        arabic: "اَلْحَمْدُ لِلّٰهِ الَّذ۪ي اَحْيَانَا بَعْدَ مَٓا اَمَاتَنَا وَاِلَيْهِ النُّشُورُ",
-        meaning:
-          "Bizi öldükten sonra tekrar dirilten Allah'a hamdolsun. Dönüş O'nadır.",
-      },
+    {
+      title: "Uyumadan Önce",
+      arabic: "بِاسْمِكَ اللّٰهُمَّ اَمُوتُ وَاَحْيَا",
+      meaning: "Allah'ım! Senin isminle ölür ve senin isminle dirilirim.",
+      audioRef: "40:68",
+    },
+    {
+      title: "Uyanınca",
+      arabic: "اَلْحَمْدُ لِلّٰهِ الَّذ۪ي اَحْيَانَا بَعْدَ مَٓا اَمَاتَنَا وَاِلَيْهِ النُّشُورُ",
+      meaning:
+        "Bizi öldükten sonra tekrar dirilten Allah'a hamdolsun. Dönüş O'nadır.",
+      audioRef: "2:28",
+    },
     ],
   },
   {
@@ -223,12 +237,13 @@ export const duaCategories: DuaCategory[] = [
           "Senden başka hiçbir ilâh yoktur. Seni eksikliklerden tenzih ederim. Ben gerçekten zâlimlerden oldum.",
         audioRef: "21:87",
       },
-      {
-        title: "Genişlik ve Kolaylık Duası",
-        arabic: "اَللّٰهُمَّ لَٓا سَهْلَ اِلَّا مَا جَعَلْتَهُ سَهْلًا وَاَنْتَ تَجْعَلُ الْحُزْنَ اِذَا شِئْتَ سَهْلًا",
-        meaning:
-          "Allah'ım! Senin kolay kıldığından başka kolaylık yoktur. Sen dilediğin zaman hüznü (zorluğu) kolay kılarsın.",
-      },
+    {
+      title: "Genişlik ve Kolaylık Duası",
+      arabic: "اَللّٰهُمَّ لَٓا سَهْلَ اِلَّا مَا جَعَلْتَهُ سَهْلًا وَاَنْتَ تَجْعَلُ الْحُزْنَ اِذَا شِئْتَ سَهْلًا",
+      meaning:
+        "Allah'ım! Senin kolay kıldığından başka kolaylık yoktur. Sen dilediğin zaman hüznü (zorluğu) kolay kılarsın.",
+      audioRef: "94:5",
+    },
     ],
   },
   {
@@ -244,12 +259,13 @@ export const duaCategories: DuaCategory[] = [
           "Bunu (bu vasıtayla gitmeyi) bizim emrimize veren Allah'ı tenzih ederiz. Onu kullanma gücüne biz sahip değildik. Şüphesiz biz Rabbimize döneceğiz.",
         audioRef: "43:13",
       },
-      {
-        title: "Eve Girerken",
-        arabic: "بِسْمِ اللّٰهِ وَلَجْنَا وَبِسْمِ اللّٰهِ خَرَجْنَا وَعَلٰى رَبِّنَا تَوَكَّلْنَا",
-        meaning:
-          "Allah'ın adıyla girdik, Allah'ın adıyla çıktık. Rabbimize tevekkül ettik.",
-      },
+    {
+      title: "Eve Girerken",
+      arabic: "بِسْمِ اللّٰهِ وَلَجْنَا وَبِسْمِ اللّٰهِ خَرَجْنَا وَعَلٰى رَبِّنَا تَوَكَّلْنَا",
+      meaning:
+        "Allah'ın adıyla girdik, Allah'ın adıyla çıktık. Rabbimize tevekkül ettik.",
+      audioRef: "11:88",
+    },
     ],
   },
   {
@@ -258,18 +274,20 @@ export const duaCategories: DuaCategory[] = [
     icon: "🌅",
     description: "Günün başında ve sonunda",
     duas: [
-      {
-        title: "Sabah-Akşam Zikri",
-        arabic: "اَصْبَحْنَا وَاَصْبَحَ الْمُلْكُ لِلّٰهِ وَالْحَمْدُ لِلّٰهِ",
-        meaning:
-          "Sabaha erdik, bütün mülk de Allah'a ait olarak sabaha erdi. Hamd Allah'adır. (Akşam 'amsaynâ' denilir.)",
-      },
-      {
-        title: "Korunma Duası",
-        arabic: "بِسْمِ اللّٰهِ الَّذ۪ي لَٓا يَضُرُّ مَعَ اسْمِهِ شَيْءٌ فِي الْاَرْضِ وَلَٓا فِي السَّمَٓاءِ وَهُوَ السَّم۪يعُ الْعَل۪يمُ",
-        meaning:
-          "İsmi sayesinde yerde ve gökte hiçbir şeyin zarar veremeyeceği Allah'ın adıyla. O, işiten ve bilendir.",
-      },
+    {
+      title: "Sabah-Akşam Zikri",
+      arabic: "اَصْبَحْنَا وَاَصْبَحَ الْمُلْكُ لِلّٰهِ وَالْحَمْدُ لِلّٰهِ",
+      meaning:
+        "Sabaha erdik, bütün mülk de Allah'a ait olarak sabaha erdi. Hamd Allah'adır. (Akşam 'amsaynâ' denilir.)",
+      audioRef: "3:26",
+    },
+    {
+      title: "Korunma Duası",
+      arabic: "بِسْمِ اللّٰهِ الَّذ۪ي لَٓا يَضُرُّ مَعَ اسْمِهِ شَيْءٌ فِي الْاَرْضِ وَلَٓا فِي السَّمَٓاءِ وَهُوَ السَّم۪يعُ الْعَل۪يمُ",
+      meaning:
+        "İsmi sayesinde yerde ve gökte hiçbir şeyin zarar veremeyeceği Allah'ın adıyla. O, işiten ve bilendir.",
+      audioRef: "2:255",
+    },
     ],
   },
 ];
