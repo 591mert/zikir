@@ -77,51 +77,70 @@ export function SurahListenButton({ surahId }: { surahId: number }) {
 
 // Tek bir duayı dinleten düğme
 export function DuaPlayButton({ dua }: { dua: Dua }) {
-  const [ttsPlaying, setTtsPlaying] = useState(false);
-  const [ttsBusy, setTtsBusy] = useState(false);
+  const audio = useAudio();
+  const [resolving, setResolving] = useState(false);
   const [errMsg, setErrMsg] = useState<string | null>(null);
 
-  // Anlık çalan HTMLAudioElement referansı (durdurmak için)
-  const tempAudioRef = useRef<HTMLAudioElement | null>(null);
+  // Önbellekteki URL (varsa)
+  const cachedUrl = dua.audioRef ? (audioCache.get(dua.audioRef) ?? null) : null;
 
-  // Bileşen kapanırken TTS + temp audio durdurulur
+  // audioRef yoksa TTS state
+  const [ttsPlaying, setTtsPlaying] = useState(false);
+
+  // Bileşen kapanırken TTS durdur
   useEffect(() => {
-    return () => {
-      stopSpeaking();
-      tempAudioRef.current?.pause();
-    };
+    return () => stopSpeaking();
   }, []);
 
-  function stopAll() {
-    stopSpeaking();
-    setTtsPlaying(false);
-    audioPlayer.stop();
-    tempAudioRef.current?.pause();
-    tempAudioRef.current = null;
-  }
+  // Kur'an sesi aktif mi?
+  const kuranAktif = cachedUrl != null && audio.current === cachedUrl;
+  const kuranOynuyor = kuranAktif && (audio.status === "playing" || audio.status === "loading");
+  const oynuyor = kuranOynuyor || ttsPlaying;
+  const yukleniyor = resolving || (kuranAktif && audio.status === "loading");
 
   function handle() {
     setErrMsg(null);
 
-    // TTS çalıyorsa durdur
-    if (ttsPlaying) {
-      stopAll();
-      return;
+    // Kur'an sesi çalıyorsa durdur/başlat (MiniPlayer ile)
+    if (dua.audioRef) {
+      const url = cachedUrl;
+      if (url) {
+        if (kuranOynuyor) {
+          audioPlayer.toggle();
+          return;
+        }
+        // URL önbellekte — Kur'an sesini çal (MiniPlayer gösterir)
+        audioPlayer.playSingle(url);
+        stopSpeaking();
+        setTtsPlaying(false);
+        return;
+      }
+      // URL önbellekte değil — getir, yüklenirken bekle
+      if (!audioCache.has(dua.audioRef)) {
+        setResolving(true);
+        fetchAyahAudio(dua.audioRef).then((u) => {
+          setResolving(false);
+          if (u) {
+            audioPlayer.playSingle(u);
+            stopSpeaking();
+            setTtsPlaying(false);
+          } else {
+            setErrMsg("Ses alınamadı");
+          }
+        });
+        return;
+      }
     }
 
-    stopAll();
-
-    const ttsStart = Date.now();
-
-    // TTS her zaman senkron başlat (gesture korunur, her cihazda çalışır)
+    // audioRef yok veya URL henüz gelmedi — TTS dene
+    if (ttsPlaying) {
+      stopSpeaking();
+      setTtsPlaying(false);
+      return;
+    }
+    audioPlayer.stop();
     const ok = speakArabic(dua.arabic, {
-      onEnd: () => {
-        setTtsPlaying(false);
-        // 500ms'den kısa sürede bittiyse → Arapça ses verisi yok
-        if (Date.now() - ttsStart < 500) {
-          setErrMsg("Cihazda Arapça ses yok");
-        }
-      },
+      onEnd: () => setTtsPlaying(false),
       onError: () => {
         setTtsPlaying(false);
         setErrMsg("Cihazda ses yok");
@@ -129,32 +148,10 @@ export function DuaPlayButton({ dua }: { dua: Dua }) {
     });
     if (!ok) {
       setErrMsg("Cihaz sesi desteklemiyor");
-      return;
-    }
-    // Hemen "çalıyor" göster — onStart callback'ini bekleme
-    setTtsPlaying(true);
-
-    // Kur'an sesi önbellekteyse ARKA PLANDA dene (başarırsa TTS'yi durdurur)
-    if (dua.audioRef) {
-      const url = audioCache.get(dua.audioRef);
-      if (url) {
-        const el = new Audio(url);
-        tempAudioRef.current = el;
-        el.onplay = () => {
-          stopSpeaking();
-          setTtsPlaying(false);
-        };
-        el.onerror = () => {};
-        el.play().catch(() => {});
-      }
-      if (!audioCache.has(dua.audioRef)) {
-        fetchAyahAudio(dua.audioRef).catch(() => {});
-      }
+    } else {
+      setTtsPlaying(true);
     }
   }
-
-  const loading = false;
-  const playing = ttsPlaying;
 
   return (
     <div className="flex shrink-0 flex-col items-end gap-1">
@@ -168,11 +165,11 @@ export function DuaPlayButton({ dua }: { dua: Dua }) {
         }
       >
         <span className="text-xl">
-          {loading ? "⏳" : playing ? "⏹" : "▶"}
+          {yukleniyor ? "⏳" : oynuyor ? "⏹" : "▶"}
         </span>
-        {loading
+        {yukleniyor
           ? "Yükleniyor"
-          : playing
+          : oynuyor
             ? "Durdur"
             : errMsg
               ? "Tekrar dene"
@@ -182,7 +179,7 @@ export function DuaPlayButton({ dua }: { dua: Dua }) {
         <span className="text-sm font-bold text-red-600">{errMsg}</span>
       ) : (
         <span className="text-xs font-semibold text-nuur-400">
-          {dua.audioRef && audioCache.has(dua.audioRef) ? "Kur'an sesi" : "Okuma sesi"}
+          {kuranAktif && cachedUrl ? "Kur'an sesi" : "Okuma sesi"}
         </span>
       )}
     </div>
