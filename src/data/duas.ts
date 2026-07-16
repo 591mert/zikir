@@ -193,16 +193,18 @@ export const duaCategories: DuaCategory[] = [
     description: "Yemekten önce ve sonra",
     duas: [
       {
-        title: "Yemeğe Başlarken",
-        arabic: "بِسْمِ اللّٰهِ اَوَّلَهُ وَاٰخِرَهُ",
-        meaning: "Başında da sonunda da Allah'ın adıyla.",
-      },
-      {
-        title: "Yemekten Sonra",
-        arabic: "اَلْحَمْدُ لِلّٰهِ الَّذ۪ي اَطْعَمَنَا وَسَقَانَا وَجَعَلَنَا مُسْلِم۪ينَ",
-        meaning:
-          "Bizi yediren, içiren ve bizi Müslümanlardan kılan Allah'a hamdolsun.",
-      },
+      title: "Yemeğe Başlarken",
+      arabic: "بِسْمِ اللّٰهِ اَوَّلَهُ وَاٰخِرَهُ",
+      meaning: "Başında da sonunda da Allah'ın adıyla.",
+      audioUrl: "/audio/food/yemege-baslarken.mp3",
+    },
+    {
+      title: "Yemekten Sonra",
+      arabic: "اَلْحَمْدُ لِلّٰهِ الَّذ۪ي اَطْعَمَنَا وَسَقَانَا وَجَعَلَنَا مُسْلِم۪ينَ",
+      meaning:
+        "Bizi yediren, içiren ve bizi Müslümanlardan kılan Allah'a hamdolsun.",
+      audioUrl: "/audio/food/yemekten-sonra.mp3",
+    },
     ],
   },
   {
