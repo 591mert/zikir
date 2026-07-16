@@ -4,6 +4,8 @@ export interface Dua {
   meaning: string;
   // Kur'an âyeti ise "sûre:âyet" referansı (gerçek sesli okuma için)
   audioRef?: string;
+  // Tam sûre ise sûre ID'si (tüm âyetleri sırayla çalar)
+  surahId?: number;
 }
 
 export interface DuaCategory {
@@ -43,6 +45,7 @@ export const prayerCategory: DuaCategory = {
         "بِسْمِ اللّٰهِ الرَّحْمٰنِ الرَّح۪يمِ. اَلْحَمْدُ لِلّٰهِ رَبِّ الْعَالَم۪ينَ. اَلرَّحْمٰنِ الرَّح۪يمِ. مَالِكِ يَوْمِ الدّ۪ينِ. اِيَّاكَ نَعْبُدُ وَاِيَّاكَ نَسْتَع۪ينُ. اِهْدِنَا الصِّرَاطَ الْمُسْتَق۪يمَ. صِرَاطَ الَّذ۪ينَ اَنْعَمْتَ عَلَيْهِمْ غَيْرِ الْمَغْضُوبِ عَلَيْهِمْ وَلَا الضَّآلّ۪ينَ. اٰم۪ينَ",
       meaning:
         "(Her rekâtın başında okunur.) Rahmân ve Rahîm olan Allah'ın adıyla. Âlemlerin Rabbi Allah'a hamdolsun. O, Rahmân ve Rahîm'dir. Hesap gününün sahibidir. Ancak sana kulluk ederiz ve yalnız senden yardım dileriz. Bizi doğru yola ilet.",
+      surahId: 1,
     },
     {
       title: "Ettehiyyâtü",

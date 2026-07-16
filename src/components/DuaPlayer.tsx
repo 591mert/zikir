@@ -87,58 +87,90 @@ export function DuaPlayButton({ dua }: { dua: Dua }) {
   // audioRef yoksa TTS state
   const [ttsPlaying, setTtsPlaying] = useState(false);
 
+  // Bu buton tarafından başlatılan ses mi?
+  const [kendiSesim, setKendiSesim] = useState(false);
+
   // Bileşen kapanırken TTS durdur
   useEffect(() => {
     return () => stopSpeaking();
   }, []);
 
-  // Kur'an sesi aktif mi?
-  const kuranAktif = cachedUrl != null && audio.current === cachedUrl;
-  const kuranOynuyor = kuranAktif && (audio.status === "playing" || audio.status === "loading");
-  const oynuyor = kuranOynuyor || ttsPlaying;
-  const yukleniyor = resolving || (kuranAktif && audio.status === "loading");
+  // Kendi sesimiz durunca işareti temizle
+  useEffect(() => {
+    if (kendiSesim && audio.status === "idle") setKendiSesim(false);
+  }, [audio.status, kendiSesim]);
+
+  const oynuyor = kendiSesim && (audio.status === "playing" || audio.status === "loading");
+  const yukleniyor = resolving || (oynuyor && audio.status === "loading");
 
   function handle() {
     setErrMsg(null);
 
-    // Kur'an sesi çalıyorsa durdur/başlat (MiniPlayer ile)
-    if (dua.audioRef) {
-      const url = cachedUrl;
-      if (url) {
-        if (kuranOynuyor) {
-          audioPlayer.toggle();
-          return;
-        }
-        // URL önbellekte — Kur'an sesini çal (MiniPlayer gösterir)
-        audioPlayer.playSingle(url);
-        stopSpeaking();
-        setTtsPlaying(false);
+    // TTS çalıyorsa durdur
+    if (ttsPlaying) { stopSpeaking(); setTtsPlaying(false); return; }
+
+    // audioPlayer'da bizim sesimiz çalıyorsa durdur/başlat
+    if (kendiSesim && (audio.status === "playing" || audio.status === "loading")) {
+      audioPlayer.toggle();
+      return;
+    }
+
+    // Tam sûre (ör. Fâtiha) — Kur'an sayfasındaki gibi tüm âyetleri çal
+    if (dua.surahId) {
+      stopSpeaking();
+      setTtsPlaying(false);
+      audioPlayer.stop();
+      const urls = surahAudioCache.get(dua.surahId);
+      if (urls) {
+        setKendiSesim(true);
+        audioPlayer.playList(urls);
         return;
       }
-      // URL önbellekte değil — getir, yüklenirken bekle
+      setResolving(true);
+      fetchSurah(dua.surahId)
+        .then((s) => {
+          const u = s.ayahs.map((a) => a.audio).filter(Boolean);
+          surahAudioCache.set(dua.surahId!, u);
+          setResolving(false);
+          if (u.length) {
+            setKendiSesim(true);
+            audioPlayer.playList(u);
+          } else setErrMsg("Ses alınamadı");
+        })
+        .catch(() => {
+          setResolving(false);
+          setErrMsg("Ses alınamadı");
+        });
+      return;
+    }
+
+    // Tek âyet (audioRef) — MiniPlayer ile çal
+    if (dua.audioRef) {
+      stopSpeaking();
+      setTtsPlaying(false);
+      audioPlayer.stop();
+      const url = cachedUrl;
+      if (url) {
+        setKendiSesim(true);
+        audioPlayer.playSingle(url);
+        return;
+      }
       if (!audioCache.has(dua.audioRef)) {
         setResolving(true);
         fetchAyahAudio(dua.audioRef).then((u) => {
           setResolving(false);
           if (u) {
+            setKendiSesim(true);
             audioPlayer.playSingle(u);
-            stopSpeaking();
-            setTtsPlaying(false);
-          } else {
-            setErrMsg("Ses alınamadı");
-          }
+          } else setErrMsg("Ses alınamadı");
         });
         return;
       }
     }
 
-    // audioRef yok veya URL henüz gelmedi — TTS dene
-    if (ttsPlaying) {
-      stopSpeaking();
-      setTtsPlaying(false);
-      return;
-    }
+    // Ne sûre ne âyet — TTS
     audioPlayer.stop();
+    setKendiSesim(false);
     const ok = speakArabic(dua.arabic, {
       onEnd: () => setTtsPlaying(false),
       onError: () => {
@@ -179,7 +211,7 @@ export function DuaPlayButton({ dua }: { dua: Dua }) {
         <span className="text-sm font-bold text-red-600">{errMsg}</span>
       ) : (
         <span className="text-xs font-semibold text-nuur-400">
-          {kuranAktif && cachedUrl ? "Kur'an sesi" : "Okuma sesi"}
+          {dua.surahId ? "Tam sûre sesi" : kuranAktif && cachedUrl ? "Âyet sesi" : "Okuma sesi"}
         </span>
       )}
     </div>
