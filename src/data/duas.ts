@@ -178,11 +178,12 @@ export const duaCategories: DuaCategory[] = [
         audioRef: "1:1",
       },
       {
-        title: "İşe Başlarken",
-        arabic: "اللّٰهُمَّ بَارِكْ لَنَا ف۪يمَا رَزَقْتَنَا",
-        meaning:
-          "Allah'ım! Bize rızık olarak verdiklerin hakkında bereket ihsan eyle.",
-      },
+      title: "İşe Başlarken",
+      arabic: "اللّٰهُمَّ بَارِكْ لَنَا ف۪يمَا رَزَقْتَنَا",
+      meaning:
+        "Allah'ım! Bize rızık olarak verdiklerin hakkında bereket ihsan eyle.",
+      audioUrl: "/audio/before-action/ise-baslarken.mp3",
+    },
     ],
   },
   {
