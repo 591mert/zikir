@@ -111,58 +111,43 @@ export function DuaPlayButton({ dua }: { dua: Dua }) {
 
     stopAll();
 
-    // 1) Önbellekte Kur'an sesi varsa dene
-    if (dua.audioRef) {
-      const url = audioCache.get(dua.audioRef);
-      if (url) {
-        const el = new Audio(url);
-        tempAudioRef.current = el;
-        el.play()
-          .then(() => {
-            tempAudioRef.current = null;
-          })
-          .catch(() => {
-            tempAudioRef.current = null;
-            // Kur'an sesi başarısız → TTS'e düş
-            tryTTS();
-          });
-        return;
-      }
-      // Önbellekte yoksa arka planda getir (bir dahaki tık için)
-      if (!audioCache.has(dua.audioRef)) {
-        fetchAyahAudio(dua.audioRef).catch(() => {});
-      }
-    }
-
-    // 2) TTS (telefonun okuma sesi)
-    tryTTS();
-  }
-
-  function tryTTS() {
+    // TTS her zaman senkron başlat (gesture korunur, her cihazda çalışır)
     const ok = speakArabic(dua.arabic, {
-      onStart: () => {
-        setTtsBusy(false);
-        setTtsPlaying(true);
-        setErrMsg(null);
-      },
       onEnd: () => {
         setTtsPlaying(false);
-        setTtsBusy(false);
       },
       onError: () => {
         setTtsPlaying(false);
-        setTtsBusy(false);
         setErrMsg("Cihazda ses yok");
       },
     });
     if (!ok) {
       setErrMsg("Cihaz sesi desteklemiyor");
-    } else {
-      setTtsBusy(true);
+      return;
+    }
+    // Hemen "çalıyor" göster — onStart callback'ini bekleme
+    setTtsPlaying(true);
+
+    // Kur'an sesi önbellekteyse ARKA PLANDA dene (başarırsa TTS'yi durdurur)
+    if (dua.audioRef) {
+      const url = audioCache.get(dua.audioRef);
+      if (url) {
+        const el = new Audio(url);
+        tempAudioRef.current = el;
+        el.onplay = () => {
+          stopSpeaking();
+          setTtsPlaying(false);
+        };
+        el.onerror = () => {};
+        el.play().catch(() => {});
+      }
+      if (!audioCache.has(dua.audioRef)) {
+        fetchAyahAudio(dua.audioRef).catch(() => {});
+      }
     }
   }
 
-  const loading = ttsBusy;
+  const loading = false;
   const playing = ttsPlaying;
 
   return (

@@ -135,10 +135,9 @@ export function speakArabic(text: string, handlers: SpeakHandlers = {}): boolean
   u.onerror = (e) => {
     currentUtterance = null;
     finished = true;
-    // "interrupted" kullanıcı tarafından durdurulma — hata sayma
-    if (e.error !== "interrupted") {
-      handlers.onError?.();
-    }
+    // "interrupted" kullanıcı durdurması — sadece başladıysa yoksay
+    if (e.error === "interrupted" && started) return;
+    handlers.onError?.();
   };
 
   // 🔑 KRİTİK: Nesneyi canlı tut (Chrome çöp toplamasını engeller).
@@ -155,15 +154,12 @@ export function speakArabic(text: string, handlers: SpeakHandlers = {}): boolean
   }
 
   // Android'de bazen ses başlamaz ama hata da vermez.
-  // 3 sn içinde başlamazsa "ses yok" kabul et.
+  // 3 sn içinde başlamazsa "Cihazda ses yok" kabul et.
   setTimeout(() => {
-    if (!started && !finished) {
+    if (!started) {
       synth.cancel();
       currentUtterance = null;
       handlers.onError?.();
-    } else if (!started) {
-      // Başladı bildirimi gelmediyse yine de "çalıyor" kabul et
-      handlers.onStart?.();
     }
   }, 3000);
   return true;
