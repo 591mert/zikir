@@ -40,7 +40,7 @@ export async function fetchSurah(num: number): Promise<SurahFull> {
     numberInSurah: a.numberInSurah,
     arabic: a.text,
     turkish: turkish[i]?.text ?? "",
-    audio: audio[i]?.audio ?? "",
+    audio: (audio[i]?.audio ?? "").replace(/^http:\/\//i, "https://"),
   }));
 
   return {
@@ -61,8 +61,11 @@ export async function fetchAyahAudio(ref: string): Promise<string | null> {
     const res = await fetch(`https://api.alquran.cloud/v1/ayah/${ref}/ar.alafasy`);
     if (!res.ok) return null;
     const json = await res.json();
-    const audio = json?.data?.audio ?? null;
-    if (audio) audioCache.set(ref, audio);
+    let audio = json?.data?.audio ?? null;
+    if (audio) {
+      audio = audio.replace(/^http:\/\//i, "https://");
+      audioCache.set(ref, audio);
+    }
     return audio;
   } catch {
     return null;
