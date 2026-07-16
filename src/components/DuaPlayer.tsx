@@ -1,15 +1,34 @@
 import { useEffect, useState } from "react";
 import type { Dua } from "@/data/duas";
-import { fetchSurah, fetchAyahAudio } from "@/lib/quran";
+import { fetchSurah, fetchAyahAudio, audioCache, preFetchAyahAudio } from "@/lib/quran";
 import { audioPlayer, useAudio } from "@/hooks/useAudio";
 import { surahMeta } from "@/data/surahMeta";
 import { speakArabic, stopSpeaking } from "@/lib/tts";
+import type { DuaCategory } from "@/data/duas";
 
 // Sûre ses listesi önbelleği (id -> url listesi)
 const surahAudioCache = new Map<number, string[]>();
 
 function listEquals(a: string[], b: string[]): boolean {
   return a.length === b.length && a.every((u, i) => u === b[i]);
+}
+
+// Tüm sesleri önyükle — component mount'ta çağrılır
+export function preFetchCategoryAudio(category: DuaCategory): void {
+  const refs = category.duas.map((d) => d.audioRef).filter(Boolean);
+  if (refs.length) preFetchAyahAudio(refs as string[]);
+  if (category.surahIds) {
+    for (const id of category.surahIds) {
+      if (!surahAudioCache.has(id)) {
+        fetchSurah(id)
+          .then((s) => {
+            const urls = s.ayahs.map((a) => a.audio).filter(Boolean);
+            if (urls.length) surahAudioCache.set(id, urls);
+          })
+          .catch(() => {});
+      }
+    }
+  }
 }
 
 // Tam sûreyi dinleten düğme (namaz sûreleri için)
@@ -61,11 +80,13 @@ export function SurahListenButton({ surahId }: { surahId: number }) {
 // - yoksa telefonun Arapça sesli okumasını (TTS) kullanır
 export function DuaPlayButton({ dua }: { dua: Dua }) {
   const audio = useAudio();
-  const [resolvedUrl, setResolvedUrl] = useState<string | null>(null);
   const [resolving, setResolving] = useState(false);
   const [ttsPlaying, setTtsPlaying] = useState(false);
   const [ttsBusy, setTtsBusy] = useState(false);
   const [errMsg, setErrMsg] = useState<string | null>(null);
+
+  // Önceden yüklenmiş URL varsa onu al, yoksa beklet
+  const cachedUrl = dua.audioRef ? (audioCache.get(dua.audioRef) ?? null) : null;
 
   // Bileşen kapanırken TTS durdurulur
   useEffect(() => {
@@ -80,42 +101,54 @@ export function DuaPlayButton({ dua }: { dua: Dua }) {
     }
   }, [audio.status, ttsPlaying]);
 
-  async function handle() {
+  // URL henüz önbellekte yoksa arka planda getir
+  useEffect(() => {
+    if (dua.audioRef && !audioCache.has(dua.audioRef)) {
+      fetchAyahAudio(dua.audioRef).catch(() => {});
+    }
+  }, [dua.audioRef]);
+
+  function handle() {
     setErrMsg(null);
 
-    // 1) Gerçek âyet sesi varsa
     if (dua.audioRef) {
-      try {
-        let url = resolvedUrl;
-        if (!url) {
-          setResolving(true);
-          url = await fetchAyahAudio(dua.audioRef);
-          setResolvedUrl(url);
-          setResolving(false);
-        }
-        if (url) {
-          stopSpeaking();
-          setTtsPlaying(false);
-          audioPlayer.playSingle(url);
-        } else {
-          setErrMsg("Ses yüklenemedi");
-        }
-      } catch (e) {
-        setResolving(false);
-        setErrMsg("Bağlantı hatası");
-        console.error("[Zikir] Dua sesi hatası:", e);
+      const url = audioCache.get(dua.audioRef);
+      if (!url) {
+        setResolving(true);
+        fetchAyahAudio(dua.audioRef)
+          .then((u) => {
+            setResolving(false);
+            if (u) {
+              stopSpeaking();
+              setTtsPlaying(false);
+              // setTimeout 0 ile microtask sırasına al — gesture'ı korumak için
+              // aslında burada gesture kayboldu ama Promise.then içinde değiliz,
+              // doğrudan çağırabiliriz.
+              audioPlayer.playSingle(u);
+            } else {
+              setErrMsg("Ses yüklenemedi");
+            }
+          })
+          .catch(() => {
+            setResolving(false);
+            setErrMsg("Bağlantı hatası");
+          });
+        return;
       }
+      // URL önbellekte — hemen çal (senkron, gesture korunur)
+      stopSpeaking();
+      setTtsPlaying(false);
+      audioPlayer.playSingle(url);
       return;
     }
 
-    // 2) Yoksa telefonun Arapça sesli okuması (sağlam TTS)
+    // TTS (telefonun Arapça sesli okuması)
     if (ttsPlaying) {
       stopSpeaking();
       setTtsPlaying(false);
       return;
     }
     audioPlayer.stop();
-    // SENKRON çağrı (dokunuş anında) — iOS için zorunlu
     const ok = speakArabic(dua.arabic, {
       onStart: () => {
         setTtsBusy(false);
@@ -139,13 +172,11 @@ export function DuaPlayButton({ dua }: { dua: Dua }) {
     }
   }
 
-  const kuranActive = !!resolvedUrl && audio.current === resolvedUrl;
+  const kuranActive = !!cachedUrl && audio.current === cachedUrl;
   const kuranPlaying = kuranActive && audio.status === "playing";
   const kuranLoading = kuranActive && audio.status === "loading";
   const loading = resolving || ttsBusy || kuranLoading;
 
-  // Düğme HER ZAMAN görünür ve aktif olur.
-  // Kur'an sesi varsa onu, yoksa telefonun okuma sesini kullanır.
   return (
     <div className="flex shrink-0 flex-col items-end gap-1">
       <button

@@ -7,17 +7,26 @@
 //     okuma anında iptal olur. Bu yüzden SENKRON çağrılır.
 //   - Sesler uygulama açılırken önceden yüklenir (Android için kritik).
 //   - En iyi Arapça sesi seçilir.
+//   - iOS'ta ses kalitesi düşüktü — premium sesler önceliklendirildi.
+//   - Android'de TTS bazen sessiz kalıyordu — hata yönetimi eklendi.
 // ============================================================================
 
 let voicesCache: SpeechSynthesisVoice[] = [];
 let voicesLoaded = false;
+let isIOS = false;
 // ÖNEMLİ: Okuma nesnesi modül düzeyinde tutulur. Chrome (bilgisayar/Android)
 // bu nesneyi çöp toplayıp silerse okuma anında durur. Bu referans bunu engeller.
 let currentUtterance: SpeechSynthesisUtterance | null = null;
 
+function detectIOS(): boolean {
+  return /iPad|iPhone|iPod/.test(navigator.userAgent) ||
+    (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
+}
+
 // UYGULAMA AÇILIRKEN çağrılır. Sesleri önceden yükler.
 export function primeVoices(): void {
   if (!("speechSynthesis" in window)) return;
+  isIOS = detectIOS();
   const synth = window.speechSynthesis;
   const load = () => {
     const v = synth.getVoices();
@@ -51,6 +60,7 @@ function pickBestArabicVoice(voices: SpeechSynthesisVoice[]): SpeechSynthesisVoi
   const arabic = voices.filter((v) => v.lang?.toLowerCase().startsWith("ar"));
   if (arabic.length === 0) return null;
 
+  // iOS öncelikli — kaliteli sesler
   const preferredNames = [
     "maged", "majed", "google", "amira", "tarik", "naayf", "hamed", "salma",
   ];
@@ -58,9 +68,16 @@ function pickBestArabicVoice(voices: SpeechSynthesisVoice[]): SpeechSynthesisVoi
     const found = arabic.find((v) => v.name?.toLowerCase().includes(name));
     if (found) return found;
   }
+  // iOS'ta "ar-SA" sesini tercih et (genelde daha kaliteli)
   const sa = arabic.find((v) => v.lang?.toLowerCase().includes("ar-sa"));
   if (sa) return sa;
   return arabic[0];
+}
+
+// TTS'in bu cihazda çalışıp çalışmayacağını kabaca kontrol eder
+export function isTtsAvailable(): boolean {
+  if (!("speechSynthesis" in window)) return false;
+  return true; // her ihtimale karşı true; ses olmasa bile synth.speak() deneriz
 }
 
 export interface SpeakHandlers {
@@ -99,22 +116,29 @@ export function speakArabic(text: string, handlers: SpeakHandlers = {}): boolean
   } else {
     u.lang = "ar-SA";
   }
-  u.rate = 0.8;
+  // iOS'ta daha yavaş oku — ses kalitesi artar, anlaşılırlık yükselir
+  u.rate = isIOS ? 0.7 : 0.85;
   u.pitch = 1.0;
   u.volume = 1.0;
 
   let started = false;
+  let finished = false;
   u.onstart = () => {
     started = true;
     handlers.onStart?.();
   };
   u.onend = () => {
-    currentUtterance = null; // referansı bırak
+    currentUtterance = null;
+    finished = true;
     handlers.onEnd?.();
   };
-  u.onerror = () => {
+  u.onerror = (e) => {
     currentUtterance = null;
-    handlers.onError?.();
+    finished = true;
+    // "interrupted" kullanıcı tarafından durdurulma — hata sayma
+    if (e.error !== "interrupted") {
+      handlers.onError?.();
+    }
   };
 
   // 🔑 KRİTİK: Nesneyi canlı tut (Chrome çöp toplamasını engeller).
@@ -130,17 +154,27 @@ export function speakArabic(text: string, handlers: SpeakHandlers = {}): boolean
     return false;
   }
 
-  // Güvenlik: eğer 1.5 saniye içinde başlamadıysa yine de "çalıyor" kabul et
+  // Android'de bazen ses başlamaz ama hata da vermez.
+  // 3 sn içinde başlamazsa "ses yok" kabul et.
   setTimeout(() => {
-    if (!started) handlers.onStart?.();
-  }, 1500);
+    if (!started && !finished) {
+      synth.cancel();
+      currentUtterance = null;
+      handlers.onError?.();
+    } else if (!started) {
+      // Başladı bildirimi gelmediyse yine de "çalıyor" kabul et
+      handlers.onStart?.();
+    }
+  }, 3000);
   return true;
 }
 
 export function stopSpeaking(): void {
   try {
     currentUtterance = null;
-    window.speechSynthesis?.cancel();
+    if ("speechSynthesis" in window) {
+      window.speechSynthesis.cancel();
+    }
   } catch {
     // yoksay
   }

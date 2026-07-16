@@ -156,6 +156,7 @@ export const duaCategories: DuaCategory[] = [
         arabic: "بِسْمِ اللّٰهِ الرَّحْمٰنِ الرَّح۪يمِ",
         meaning:
           "Rahmân ve Rahîm olan Allah'ın adıyla. (Her hayırlı işe başlarken okunur.)",
+        audioRef: "1:1",
       },
       {
         title: "İşe Başlarken",

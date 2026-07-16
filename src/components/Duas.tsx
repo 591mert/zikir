@@ -1,12 +1,17 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { duaCategories } from "@/data/duas";
 import { surahMeta } from "@/data/surahMeta";
-import { DuaPlayButton, SurahListenButton, surahArabic } from "@/components/DuaPlayer";
+import { DuaPlayButton, SurahListenButton, surahArabic, preFetchCategoryAudio } from "@/components/DuaPlayer";
 import { ArabicText, BackHeader, Card, Pill } from "@/components/ui";
 
 export default function Duas({ onBack }: { onBack: () => void }) {
   const [openId, setOpenId] = useState<string | null>(duaCategories[0]?.id ?? null);
   const active = duaCategories.find((c) => c.id === openId);
+
+  // Kategori değişince duaların seslerini önyükle (Android gesture sorunu için)
+  useEffect(() => {
+    if (active) preFetchCategoryAudio(active);
+  }, [active]);
 
   return (
     <div className="animate-fade space-y-5">

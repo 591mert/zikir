@@ -54,7 +54,7 @@ export async function fetchSurah(num: number): Promise<SurahFull> {
 }
 
 // "2:255" gibi bir referans için tek âyetin ses URL'sini getirir (dualar için).
-const audioCache = new Map<string, string>();
+export const audioCache = new Map<string, string>();
 export async function fetchAyahAudio(ref: string): Promise<string | null> {
   if (audioCache.has(ref)) return audioCache.get(ref)!;
   try {
@@ -66,5 +66,15 @@ export async function fetchAyahAudio(ref: string): Promise<string | null> {
     return audio;
   } catch {
     return null;
+  }
+}
+
+// Uygulama açılırken/component mount'ta ses URL'lerini önceden getirir.
+// Böylece kullanıcı butona tıkladığında beklemeye gerek kalmaz (Android gesture sorununu çözer).
+export function preFetchAyahAudio(refs: string[]): void {
+  for (const ref of refs) {
+    if (!audioCache.has(ref)) {
+      fetchAyahAudio(ref).catch(() => {});
+    }
   }
 }
