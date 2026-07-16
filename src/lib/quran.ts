@@ -55,21 +55,34 @@ export async function fetchSurah(num: number): Promise<SurahFull> {
 
 // "2:255" gibi bir referans için tek âyetin ses URL'sini getirir (dualar için).
 export const audioCache = new Map<string, string>();
+
+// everyayah.com için "1:1" -> "001001" formatına çevir
+function refToFile(ref: string): string {
+  const [s, a] = ref.split(":");
+  return `${s.padStart(3, "0")}${a.padStart(3, "0")}`;
+}
+
 export async function fetchAyahAudio(ref: string): Promise<string | null> {
   if (audioCache.has(ref)) return audioCache.get(ref)!;
+
+  // 1) alquran.cloud API (birincil kaynak)
   try {
     const res = await fetch(`https://api.alquran.cloud/v1/ayah/${ref}/ar.alafasy`);
-    if (!res.ok) return null;
-    const json = await res.json();
-    let audio = json?.data?.audio ?? null;
-    if (audio) {
-      audio = audio.replace(/^http:\/\//i, "https://");
-      audioCache.set(ref, audio);
+    if (res.ok) {
+      const json = await res.json();
+      let audio = json?.data?.audio ?? null;
+      if (audio) {
+        audio = audio.replace(/^http:\/\//i, "https://");
+        audioCache.set(ref, audio);
+        return audio;
+      }
     }
-    return audio;
-  } catch {
-    return null;
-  }
+  } catch { /* API başarısız — yedek URL dene */ }
+
+  // 2) everyayah.com CDN (yedek — alquran.cloud engelli olunca çalışır)
+  const fallback = `https://everyayah.com/data/Alafasy_128kbps/${refToFile(ref)}.mp3`;
+  audioCache.set(ref, fallback);
+  return fallback;
 }
 
 // Uygulama açılırken/component mount'ta ses URL'lerini önceden getirir.

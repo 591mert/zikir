@@ -111,10 +111,16 @@ export function DuaPlayButton({ dua }: { dua: Dua }) {
 
     stopAll();
 
+    const ttsStart = Date.now();
+
     // TTS her zaman senkron başlat (gesture korunur, her cihazda çalışır)
     const ok = speakArabic(dua.arabic, {
       onEnd: () => {
         setTtsPlaying(false);
+        // 500ms'den kısa sürede bittiyse → Arapça ses verisi yok
+        if (Date.now() - ttsStart < 500) {
+          setErrMsg("Cihazda Arapça ses yok");
+        }
       },
       onError: () => {
         setTtsPlaying(false);
