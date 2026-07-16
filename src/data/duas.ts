@@ -279,17 +279,19 @@ export const duaCategories: DuaCategory[] = [
     description: "Günün başında ve sonunda",
     duas: [
       {
-        title: "Sabah-Akşam Zikri",
-        arabic: "اَصْبَحْنَا وَاَصْبَحَ الْمُلْكُ لِلّٰهِ وَالْحَمْدُ لِلّٰهِ",
-        meaning:
-          "Sabaha erdik, bütün mülk de Allah'a ait olarak sabaha erdi. Hamd Allah'adır. (Akşam 'amsaynâ' denilir.)",
-      },
-      {
-        title: "Korunma Duası",
-        arabic: "بِسْمِ اللّٰهِ الَّذ۪ي لَٓا يَضُرُّ مَعَ اسْمِهِ شَيْءٌ فِي الْاَرْضِ وَلَٓا فِي السَّمَٓاءِ وَهُوَ السَّم۪يعُ الْعَل۪يمُ",
-        meaning:
-          "İsmi sayesinde yerde ve gökte hiçbir şeyin zarar veremeyeceği Allah'ın adıyla. O, işiten ve bilendir.",
-      },
+      title: "Sabah-Akşam Zikri",
+      arabic: "اَصْبَحْنَا وَاَصْبَحَ الْمُلْكُ لِلّٰهِ وَالْحَمْدُ لِلّٰهِ",
+      meaning:
+        "Sabaha erdik, bütün mülk de Allah'a ait olarak sabaha erdi. Hamd Allah'adır. (Akşam 'amsaynâ' denilir.)",
+      audioUrl: "/audio/morning-evening/sabah-aksam-zikri.mp3",
+    },
+    {
+      title: "Korunma Duası",
+      arabic: "بِسْمِ اللّٰهِ الَّذ۪ي لَٓا يَضُرُّ مَعَ اسْمِهِ شَيْءٌ فِي الْاَرْضِ وَلَٓا فِي السَّمَٓاءِ وَهُوَ السَّم۪يعُ الْعَل۪يمُ",
+      meaning:
+        "İsmi sayesinde yerde ve gökte hiçbir şeyin zarar veremeyeceği Allah'ın adıyla. O, işiten ve bilendir.",
+      audioUrl: "/audio/morning-evening/korunma-duasi.mp3",
+    },
     ],
   },
 ];
