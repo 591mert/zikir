@@ -211,7 +211,7 @@ export function DuaPlayButton({ dua }: { dua: Dua }) {
         <span className="text-sm font-bold text-red-600">{errMsg}</span>
       ) : (
         <span className="text-xs font-semibold text-nuur-400">
-          {dua.surahId ? "Tam sûre sesi" : cachedUrl ? "Âyet sesi" : "Okuma sesi"}
+          {dua.surahId ? "Tam sûre sesi" : cachedUrl ? "Âyet sesi" : "Sesli dua"}
         </span>
       )}
     </div>

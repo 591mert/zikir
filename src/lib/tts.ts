@@ -60,9 +60,10 @@ function pickBestArabicVoice(voices: SpeechSynthesisVoice[]): SpeechSynthesisVoi
   const arabic = voices.filter((v) => v.lang?.toLowerCase().startsWith("ar"));
   if (arabic.length === 0) return null;
 
-  // iOS öncelikli — kaliteli sesler
+  // Gerçek Kurân okuyucusu tonunda sesler öncelikli
   const preferredNames = [
     "maged", "majed", "google", "amira", "tarik", "naayf", "hamed", "salma",
+    "microsoft", "zira", "lena",
   ];
   for (const name of preferredNames) {
     const found = arabic.find((v) => v.name?.toLowerCase().includes(name));
@@ -116,9 +117,9 @@ export function speakArabic(text: string, handlers: SpeakHandlers = {}): boolean
   } else {
     u.lang = "ar-SA";
   }
-  // iOS'ta daha yavaş oku — ses kalitesi artar, anlaşılırlık yükselir
-  u.rate = isIOS ? 0.7 : 0.85;
-  u.pitch = 1.0;
+  // Kurân tilâveti tonunda: yavaş, derin, doğal
+  u.rate = isIOS ? 0.6 : 0.65;
+  u.pitch = 0.85;
   u.volume = 1.0;
 
   let started = false;
