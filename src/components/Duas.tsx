@@ -99,7 +99,7 @@ export default function Duas({ onBack }: { onBack: () => void }) {
               </p>
               {!d.audioRef && (
                 <p className="mt-2 text-xs text-nuur-400">
-                  Cihazınızın Arapça sesi ile tilâvet usûlünde okunur.
+                  Tilâvet usûlünde sesli dua
                 </p>
               )}
             </Card>

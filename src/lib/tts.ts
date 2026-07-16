@@ -63,7 +63,7 @@ function pickBestArabicVoice(voices: SpeechSynthesisVoice[]): SpeechSynthesisVoi
   // Gerçek Kurân okuyucusu tonunda sesler öncelikli
   const preferredNames = [
     "maged", "majed", "google", "amira", "tarik", "naayf", "hamed", "salma",
-    "microsoft", "zira", "lena",
+    "microsoft", "zira", "lena", "hazem", "mohamed", "nora", "ayman",
   ];
   for (const name of preferredNames) {
     const found = arabic.find((v) => v.name?.toLowerCase().includes(name));
@@ -118,8 +118,8 @@ export function speakArabic(text: string, handlers: SpeakHandlers = {}): boolean
     u.lang = "ar-SA";
   }
   // Kurân tilâveti tonunda: yavaş, derin, doğal
-  u.rate = isIOS ? 0.6 : 0.65;
-  u.pitch = 0.85;
+  u.rate = isIOS ? 0.55 : 0.6;
+  u.pitch = 0.8;
   u.volume = 1.0;
 
   let started = false;
