@@ -168,7 +168,17 @@ export function DuaPlayButton({ dua }: { dua: Dua }) {
       }
     }
 
-    // Ne sûre ne âyet — TTS
+    // Özel ses dosyası (public/audio/ içindeki MP3)
+    if (dua.audioUrl) {
+      stopSpeaking();
+      setTtsPlaying(false);
+      audioPlayer.stop();
+      setKendiSesim(true);
+      audioPlayer.playSingle(dua.audioUrl);
+      return;
+    }
+
+    // Ne sûre, ne âyet, ne özel dosya — TTS
     audioPlayer.stop();
     setKendiSesim(false);
     const ok = speakArabic(dua.arabic, {
@@ -211,7 +221,7 @@ export function DuaPlayButton({ dua }: { dua: Dua }) {
         <span className="text-sm font-bold text-red-600">{errMsg}</span>
       ) : (
         <span className="text-xs font-semibold text-nuur-400">
-          {dua.surahId ? "Tam sûre sesi" : cachedUrl ? "Âyet sesi" : "Sesli dua"}
+          {dua.surahId ? "Tam sûre sesi" : dua.audioUrl ? "Sesli dua" : cachedUrl ? "Âyet sesi" : "Sesli dua"}
         </span>
       )}
     </div>

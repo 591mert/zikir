@@ -6,6 +6,8 @@ export interface Dua {
   audioRef?: string;
   // Tam sûre ise sûre ID'si (tüm âyetleri sırayla çalar)
   surahId?: number;
+  // Özel ses dosyası URL'si (public/audio/ içine konur)
+  audioUrl?: string;
 }
 
 export interface DuaCategory {

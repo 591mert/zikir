@@ -97,7 +97,7 @@ export default function Duas({ onBack }: { onBack: () => void }) {
               <p className="mt-3 text-xl leading-relaxed text-nuur-800">
                 Anlamı: {d.meaning}
               </p>
-              {!d.audioRef && !d.surahId && (
+              {!d.audioRef && !d.audioUrl && !d.surahId && (
                 <p className="mt-2 text-xs text-nuur-400">
                   Arapça tilâvet usûlünde seslendirme
                 </p>

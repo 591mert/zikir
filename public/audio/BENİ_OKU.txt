@@ -1,0 +1,14 @@
+Bu klasore MP3 ses dosyalarini koyun.
+Her dua icin ayri bir MP3 dosyasi hazirlayin.
+
+Ornek:
+  public/audio/subhaneke.mp3
+  public/audio/ettehiyyatu.mp3
+  public/audio/salli.mp3
+  ...
+
+Sonra src/data/duas.ts icinde ilgili duaya su sekilde ekleyin:
+  audioUrl: "/audio/subhaneke.mp3",
+
+NOT: Varsayilan olarak tum dualar TTS ile okunur.
+Sadece MP3 koydugunuz dualar gercek sesle okunur.
