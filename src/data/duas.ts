@@ -214,16 +214,18 @@ export const duaCategories: DuaCategory[] = [
     description: "Yatarken ve kalkarken",
     duas: [
       {
-        title: "Uyumadan Önce",
-        arabic: "بِاسْمِكَ اللّٰهُمَّ اَمُوتُ وَاَحْيَا",
-        meaning: "Allah'ım! Senin isminle ölür ve senin isminle dirilirim.",
-      },
-      {
-        title: "Uyanınca",
-        arabic: "اَلْحَمْدُ لِلّٰهِ الَّذ۪ي اَحْيَانَا بَعْدَ مَٓا اَمَاتَنَا وَاِلَيْهِ النُّشُورُ",
-        meaning:
-          "Bizi öldükten sonra tekrar dirilten Allah'a hamdolsun. Dönüş O'nadır.",
-      },
+      title: "Uyumadan Önce",
+      arabic: "بِاسْمِكَ اللّٰهُمَّ اَمُوتُ وَاَحْيَا",
+      meaning: "Allah'ım! Senin isminle ölür ve senin isminle dirilirim.",
+      audioUrl: "/audio/sleep/uyumadan-once.mp3",
+    },
+    {
+      title: "Uyanınca",
+      arabic: "اَلْحَمْدُ لِلّٰهِ الَّذ۪ي اَحْيَانَا بَعْدَ مَٓا اَمَاتَنَا وَاِلَيْهِ النُّشُورُ",
+      meaning:
+        "Bizi öldükten sonra tekrar dirilten Allah'a hamdolsun. Dönüş O'nadır.",
+      audioUrl: "/audio/sleep/uyaninca.mp3",
+    },
     ],
   },
   {
