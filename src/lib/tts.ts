@@ -14,6 +14,7 @@
 let voicesCache: SpeechSynthesisVoice[] = [];
 let voicesLoaded = false;
 let isIOS = false;
+let isWindows = false;
 // ÖNEMLİ: Okuma nesnesi modül düzeyinde tutulur. Chrome (bilgisayar/Android)
 // bu nesneyi çöp toplayıp silerse okuma anında durur. Bu referans bunu engeller.
 let currentUtterance: SpeechSynthesisUtterance | null = null;
@@ -27,6 +28,7 @@ function detectIOS(): boolean {
 export function primeVoices(): void {
   if (!("speechSynthesis" in window)) return;
   isIOS = detectIOS();
+  isWindows = navigator.platform?.toLowerCase().includes("win") || false;
   const synth = window.speechSynthesis;
   const load = () => {
     const v = synth.getVoices();
@@ -60,16 +62,25 @@ function pickBestArabicVoice(voices: SpeechSynthesisVoice[]): SpeechSynthesisVoi
   const arabic = voices.filter((v) => v.lang?.toLowerCase().startsWith("ar"));
   if (arabic.length === 0) return null;
 
-  // Gerçek Kurân okuyucusu tonunda sesler öncelikli
+  // 1. ÖNCELİK: Doğal sinir ağı sesleri (neural / online natural)
+  // Windows Edge'de "Microsoft ... Online (Natural)" çok kalitelidir
+  const natural = arabic.find(
+    (v) => v.name?.toLowerCase().includes("natural") || v.name?.toLowerCase().includes("neural")
+  );
+  if (natural) return natural;
+
+  // 2. ÖNCELİK: Klasik yüksek kaliteli sesler (sıralı)
   const preferredNames = [
-    "maged", "majed", "google", "amira", "tarik", "naayf", "hamed", "salma",
-    "microsoft", "zira", "lena", "hazem", "mohamed", "nora", "ayman",
+    "maged", "majed", "amira", "tarik", "salma", "hazem", "mohamed",
+    "naayf", "hamed", "nora", "ayman",
+    "microsoft", "zira", "lena",
+    "google",
   ];
   for (const name of preferredNames) {
     const found = arabic.find((v) => v.name?.toLowerCase().includes(name));
     if (found) return found;
   }
-  // iOS'ta "ar-SA" sesini tercih et (genelde daha kaliteli)
+  // 3. ÖNCELİK: Suudi Arapçası sesi (genelde daha kaliteli)
   const sa = arabic.find((v) => v.lang?.toLowerCase().includes("ar-sa"));
   if (sa) return sa;
   return arabic[0];
@@ -117,9 +128,10 @@ export function speakArabic(text: string, handlers: SpeakHandlers = {}): boolean
   } else {
     u.lang = "ar-SA";
   }
-  // Kurân tilâveti tonunda: yavaş, derin, doğal
-  u.rate = isIOS ? 0.55 : 0.6;
-  u.pitch = 0.8;
+  // Kurân tilâveti tonunda: yavaş, derin, doğal, etkileyici
+  // Windows'ta neural sesler çok kaliteli olduğu için daha yavaş okutulur
+  u.rate = isIOS ? 0.5 : isWindows ? 0.5 : 0.55;
+  u.pitch = 0.75;
   u.volume = 1.0;
 
   let started = false;
