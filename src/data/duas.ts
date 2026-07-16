@@ -102,7 +102,6 @@ export const shortCategory: DuaCategory = {
       title: "Her İşte Besmele",
       arabic: "بِسْمِ اللّٰهِ",
       meaning: "Allah'ın adıyla. (Her işin başında okunur.)",
-      audioRef: "1:1",
     },
     {
       title: "İstiğfar",
@@ -113,19 +112,16 @@ export const shortCategory: DuaCategory = {
       title: "Şükür Duası",
       arabic: "اَلْحَمْدُ لِلّٰهِ",
       meaning: "Hamd Allah'a olsun. (Bir nimete kavuşunca.)",
-      audioRef: "1:2",
     },
     {
       title: "Tehlil (Tevhid)",
       arabic: "لَٓا اِلٰهَ اِلَّا اللّٰهُ",
       meaning: "Allah'tan başka ilâh yoktur.",
-      audioRef: "47:19",
     },
     {
       title: "Sözünün Dinlenmesi İçin",
       arabic: "صَدَقَ اللّٰهُ الْعَظ۪يمُ",
       meaning: "Yüce Allah doğru söylemiştir. (Kur'an okuduktan sonra.)",
-      audioRef: "3:95",
     },
     {
       title: "Yeni İşe Başlarken",
@@ -142,7 +138,6 @@ export const shortCategory: DuaCategory = {
       title: "Güzel Söz",
       arabic: "حَسْبُنَا اللّٰهُ وَنِعْمَ الْوَك۪يلُ",
       meaning: "Bize Allah yeter. O ne güzel vekildir.",
-      audioRef: "3:173",
     },
   ],
 };
@@ -217,11 +212,10 @@ export const duaCategories: DuaCategory[] = [
     description: "Zor zamanlarda okunacak",
     duas: [
       {
-        title: "Yunus (a.s.)'ın Duası",
-        arabic: "لَٓا اِلٰهَ اِلَّٓا اَنْتَ سُبْحَانَكَ اِنّ۪ي كُنْتُ مِنَ الظَّالِم۪ينَ",
-        meaning:
-          "Senden başka hiçbir ilâh yoktur. Seni eksikliklerden tenzih ederim. Ben gerçekten zâlimlerden oldum.",
-        audioRef: "21:87",
+      title: "Yunus (a.s.)'ın Duası",
+      arabic: "لَٓا اِلٰهَ اِلَّٓا اَنْتَ سُبْحَانَكَ اِنّ۪ي كُنْتُ مِنَ الظَّالِم۪ينَ",
+      meaning:
+        "Senden başka hiçbir ilâh yoktur. Seni eksikliklerden tenzih ederim. Ben gerçekten zâlimlerden oldum.",
       },
       {
         title: "Genişlik ve Kolaylık Duası",
@@ -238,11 +232,10 @@ export const duaCategories: DuaCategory[] = [
     description: "Yola çıkarken ve girerken",
     duas: [
       {
-        title: "Yola Çıkarken",
-        arabic: "سُبْحَانَ الَّذ۪ي سَخَّرَ لَنَا هٰذَا وَمَا كُنَّا لَهُ مُقْرِن۪ينَ وَاِنَّٓا اِلٰى رَبِّنَا لَمُنْقَلِبُونَ",
-        meaning:
-          "Bunu (bu vasıtayla gitmeyi) bizim emrimize veren Allah'ı tenzih ederiz. Onu kullanma gücüne biz sahip değildik. Şüphesiz biz Rabbimize döneceğiz.",
-        audioRef: "43:13",
+      title: "Yola Çıkarken",
+      arabic: "سُبْحَانَ الَّذ۪ي سَخَّرَ لَنَا هٰذَا وَمَا كُنَّا لَهُ مُقْرِن۪ينَ وَاِنَّٓا اِلٰى رَبِّنَا لَمُنْقَلِبُونَ",
+      meaning:
+        "Bunu (bu vasıtayla gitmeyi) bizim emrimize veren Allah'ı tenzih ederiz. Onu kullanma gücüne biz sahip değildik. Şüphesiz biz Rabbimize döneceğiz.",
       },
       {
         title: "Eve Girerken",
