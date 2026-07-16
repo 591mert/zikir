@@ -100,7 +100,7 @@ export function DuaPlayButton({ dua }: { dua: Dua }) {
     if (kendiSesim && audio.status === "idle") setKendiSesim(false);
   }, [audio.status, kendiSesim]);
 
-  const oynuyor = kendiSesim && (audio.status === "playing" || audio.status === "loading");
+  const oynuyor = ttsPlaying || (kendiSesim && (audio.status === "playing" || audio.status === "loading"));
   const yukleniyor = resolving || (oynuyor && audio.status === "loading");
 
   function handle() {
@@ -211,7 +211,7 @@ export function DuaPlayButton({ dua }: { dua: Dua }) {
         <span className="text-sm font-bold text-red-600">{errMsg}</span>
       ) : (
         <span className="text-xs font-semibold text-nuur-400">
-          {dua.surahId ? "Tam sûre sesi" : kuranAktif && cachedUrl ? "Âyet sesi" : "Okuma sesi"}
+          {dua.surahId ? "Tam sûre sesi" : cachedUrl ? "Âyet sesi" : "Okuma sesi"}
         </span>
       )}
     </div>
