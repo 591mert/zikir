@@ -257,16 +257,18 @@ export const duaCategories: DuaCategory[] = [
     description: "Yola çıkarken ve girerken",
     duas: [
       {
-      title: "Yola Çıkarken",
-      arabic: "سُبْحَانَ الَّذ۪ي سَخَّرَ لَنَا هٰذَا وَمَا كُنَّا لَهُ مُقْرِن۪ينَ وَاِنَّٓا اِلٰى رَبِّنَا لَمُنْقَلِبُونَ",
-      meaning:
-        "Bunu (bu vasıtayla gitmeyi) bizim emrimize veren Allah'ı tenzih ederiz. Onu kullanma gücüne biz sahip değildik. Şüphesiz biz Rabbimize döneceğiz.",
+        title: "Yola Çıkarken",
+        arabic: "سُبْحَانَ الَّذ۪ي سَخَّرَ لَنَا هٰذَا وَمَا كُنَّا لَهُ مُقْرِن۪ينَ وَاِنَّٓا اِلٰى رَبِّنَا لَمُنْقَلِبُونَ",
+        meaning:
+          "Bunu (bu vasıtayla gitmeyi) bizim emrimize veren Allah'ı tenzih ederiz. Onu kullanma gücüne biz sahip değildik. Şüphesiz biz Rabbimize döneceğiz.",
+        audioUrl: "/audio/travel/yola-cikarken.mp3",
       },
       {
         title: "Eve Girerken",
         arabic: "بِسْمِ اللّٰهِ وَلَجْنَا وَبِسْمِ اللّٰهِ خَرَجْنَا وَعَلٰى رَبِّنَا تَوَكَّلْنَا",
         meaning:
           "Allah'ın adıyla girdik, Allah'ın adıyla çıktık. Rabbimize tevekkül ettik.",
+        audioUrl: "/audio/travel/eve-girerken.mp3",
       },
     ],
   },
