@@ -135,19 +135,16 @@ export function speakArabic(text: string, handlers: SpeakHandlers = {}): boolean
   u.volume = 1.0;
 
   let started = false;
-  let finished = false;
   u.onstart = () => {
     started = true;
     handlers.onStart?.();
   };
   u.onend = () => {
     currentUtterance = null;
-    finished = true;
     handlers.onEnd?.();
   };
   u.onerror = (e) => {
     currentUtterance = null;
-    finished = true;
     // "interrupted" kullanıcı durdurması — sadece başladıysa yoksay
     if (e.error === "interrupted" && started) return;
     handlers.onError?.();

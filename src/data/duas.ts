@@ -33,6 +33,7 @@ export const prayerCategory: DuaCategory = {
       arabic: "اَللّٰهُ اَكْبَرُ",
       meaning:
         "Allah en büyüktür. (Namaza başlarken eller kaldırılırken ve her rükû/secdede okunur.)",
+      audioUrl: "/audio/namaz/iftitah-tekbiri.mp3",
     },
     {
       title: "Sübhâneke (İftitah Duası)",
@@ -40,6 +41,7 @@ export const prayerCategory: DuaCategory = {
         "سُبْحَانَكَ اللّٰهُمَّ وَبِحَمْدِكَ وَتَبَارَكَ اسْمُكَ وَتَعَالٰى جَدُّكَ وَلَٓا اِلٰهَ غَيْرُكَ",
       meaning:
         "Allah'ım! Seni hamdinle tesbih ve takdis ederim. Senin adın mübarektir. Senin şanın yücedir. Senden başka ilâh yoktur.",
+      audioUrl: "/audio/namaz/subhaneke.mp3",
     },
     {
       title: "Fâtiha Sûresi",
@@ -55,6 +57,7 @@ export const prayerCategory: DuaCategory = {
         "اَلتَّحِيَّاتُ لِلّٰهِ وَالصَّلَوَاتُ وَالطَّيِّبَاتُ. اَلسَّلَامُ عَلَيْكَ اَيُّهَا النَّبِيُّ وَرَحْمَةُ اللّٰهِ وَبَرَكَاتُهُ. اَلسَّلَامُ عَلَيْنَا وَعَلٰى عِبَادِ اللّٰهِ الصَّالِح۪ينَ. اَشْهَدُ اَنْ لَٓا اِلٰهَ اِلَّا اللّٰهُ وَاَشْهَدُ اَنَّ مُحَمَّدًا عَبْدُهُ وَرَسُولُهُ",
       meaning:
         "Bütün dilekler, ibadetler ve güzel sözler Allah'a mahsustur. Ey Peygamber! Selâm, Allah'ın rahmeti ve bereketi senin üzerine olsun. Selâm bizim ve Allah'ın sâlih kullarının üzerine olsun. Şehâdet ederim ki, Allah'tan başka ilâh yoktur. Yine şehâdet ederim ki, Muhammed O'nun kulu ve elçisidir.",
+      audioUrl: "/audio/namaz/ettehiyyatu.mp3",
     },
     {
       title: "Allâhümme Salli (Salavat)",
@@ -62,6 +65,7 @@ export const prayerCategory: DuaCategory = {
         "اَللّٰهُمَّ صَلِّ عَلٰى مُحَمَّدٍ وَعَلٰى اٰلِ مُحَمَّدٍ كَمَا صَلَّيْتَ عَلٰى اِبْرَاه۪يمَ وَعَلٰى اٰلِ اِبْرَاه۪يمَ اِنَّكَ حَم۪يدٌ مَج۪يدٌ",
       meaning:
         "Allah'ım! Muhammed'e ve Muhammed'in âline, İbrahim'e ve İbrahim'in âline salat ettiğin gibi salat eyle. Şüphesiz Sen, hamde lâyık ve şanı yüce olansın.",
+      audioUrl: "/audio/namaz/allahumme-salli.mp3",
     },
     {
       title: "Allâhümme Bârik (Salavat)",
@@ -69,6 +73,7 @@ export const prayerCategory: DuaCategory = {
         "اَللّٰهُمَّ بَارِكْ عَلٰى مُحَمَّدٍ وَعَلٰى اٰلِ مُحَمَّدٍ كَمَا بَارَكْتَ عَلٰى اِبْرَاه۪يمَ وَعَلٰى اٰلِ اِبْرَاه۪يمَ اِنَّكَ حَم۪يدٌ مَج۪يدٌ",
       meaning:
         "Allah'ım! Muhammed'e ve Muhammed'in âline, İbrahim'e ve İbrahim'in âline bereket ihsan ettiğin gibi bereket ihsan eyle. Şüphesiz Sen, hamde lâyık ve şanı yüce olansın.",
+      audioUrl: "/audio/namaz/allahumme-barik.mp3",
     },
     {
       title: "Kunut Duâsı",
@@ -76,12 +81,14 @@ export const prayerCategory: DuaCategory = {
         "اَللّٰهُمَّ اِنَّ نَعُوذُ بِكَ مِنْ عَذَابِ جَهَنَّمَ وَمِنْ عَذَابِ الْقَبْرِ وَمِنْ فِتْنَةِ الْمَحْيَا وَالْمَمَاتِ وَمِنْ فِتْنَةِ الْمَس۪يحِ الدَّجَّالِ",
       meaning:
         "Allah'ım! Cehennem azabından, kabir azabından, hayatın ve ölümün fitnesinden ve Deccal fitnesinden Sana sığınırız. (Vitir namazının son rekatında okunur.)",
+      audioUrl: "/audio/namaz/kunut-duasi.mp3",
     },
     {
       title: "Selâm Verirken",
       arabic: "اَلسَّلَامُ عَلَيْكُمْ وَرَحْمَةُ اللّٰهِ",
       meaning:
         "Selâm ve Allah'ın rahmeti üzerinize olsun. (Sağa ve sonra sola dönülerek okunur; namaz böyle tamamlanır.)",
+      audioUrl: "/audio/namaz/selam-verirken.mp3",
     },
     {
       title: "Namazdan Sonra Tesbihat",
@@ -89,6 +96,7 @@ export const prayerCategory: DuaCategory = {
         "سُبْحَانَ اللّٰهِ ×٣٣ وَالْحَمْدُ لِلّٰهِ ×٣٣ وَاللّٰهُ اَكْبَرُ ×٣٤ لَٓا اِلٰهَ اِلَّا اللّٰهُ وَحْدَهُ لَا شَر۪يكَ لَهُ لَهُ الْمُلْكُ وَلَهُ الْحَمْدُ وَهُوَ عَلٰى كُلِّ شَيْءٍ قَد۪يرٌ",
       meaning:
         "Sübhânallah (33), Elhamdülillâh (33), Allâhu Ekber (34) denir. Sonra: 'Allah'tan başka ilâh yoktur. O tektir, ortağı yoktur. Mülk O'nundur, hamd O'nadır ve O her şeye kâdirdir' denir.",
+      audioUrl: "/audio/namaz/tesbihat.mp3",
     },
   ],
 };
