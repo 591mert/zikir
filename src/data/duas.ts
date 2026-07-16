@@ -235,16 +235,18 @@ export const duaCategories: DuaCategory[] = [
     description: "Zor zamanlarda okunacak",
     duas: [
       {
-      title: "Yunus (a.s.)'ın Duası",
-      arabic: "لَٓا اِلٰهَ اِلَّٓا اَنْتَ سُبْحَانَكَ اِنّ۪ي كُنْتُ مِنَ الظَّالِم۪ينَ",
-      meaning:
-        "Senden başka hiçbir ilâh yoktur. Seni eksikliklerden tenzih ederim. Ben gerçekten zâlimlerden oldum.",
+        title: "Yunus (a.s.)'ın Duası",
+        arabic: "لَٓا اِلٰهَ اِلَّٓا اَنْتَ سُبْحَانَكَ اِنّ۪ي كُنْتُ مِنَ الظَّالِم۪ينَ",
+        meaning:
+          "Senden başka hiçbir ilâh yoktur. Seni eksikliklerden tenzih ederim. Ben gerçekten zâlimlerden oldum.",
+        audioUrl: "/audio/distress/yunus-duasi.mp3",
       },
       {
         title: "Genişlik ve Kolaylık Duası",
         arabic: "اَللّٰهُمَّ لَٓا سَهْلَ اِلَّا مَا جَعَلْتَهُ سَهْلًا وَاَنْتَ تَجْعَلُ الْحُزْنَ اِذَا شِئْتَ سَهْلًا",
         meaning:
           "Allah'ım! Senin kolay kıldığından başka kolaylık yoktur. Sen dilediğin zaman hüznü (zorluğu) kolay kılarsın.",
+        audioUrl: "/audio/distress/genislik-ve-kolaylik.mp3",
       },
     ],
   },
