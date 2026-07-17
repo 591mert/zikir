@@ -22,7 +22,7 @@ export const VAPID_PUBLIC_KEY = "BJ1AY9adlj1GXshhRUKNayiu_3efECYf3oNKkISviNVrTRj
 
 // ⬇️ Bildirim gönderen sunucunuzun adresi (Netlify'a yükleyince öğrenilir).
 // Örnek: "https://zikir-uygulama.netlify.app/.netlify/functions"
-export const PUSH_BACKEND_URL = "https://zikir-uygulama.netlify.app/.netlify/functions";
+export const PUSH_BACKEND_URL = "https://selevat.netlify.app/.netlify/functions";
 
 // Uygulama gerçekten push'a hazır mı? (anahtar girilmiş mi)
 export function pushConfigured(): boolean {
