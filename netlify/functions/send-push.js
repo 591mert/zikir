@@ -13,7 +13,7 @@ function getVapid() {
 
 function getBlobStore() {
   const siteID = process.env.SITE_ID;
-  const token = process.env.NETLIFY_FUNCTIONS_TOKEN;
+  const token = process.env.NETLIFY_ACCESS_TOKEN || process.env.NETLIFY_FUNCTIONS_TOKEN;
   if (siteID && token) return getStore("subscriptions", { siteID, token });
   return getStore("subscriptions");
 }
