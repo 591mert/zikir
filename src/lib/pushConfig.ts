@@ -18,7 +18,7 @@
 // ============================================================================
 
 // ⬇️ KENDİ PUBLIC KEY'İNİZİ buraya yapıştırın (tırnak içinde):
-export const VAPID_PUBLIC_KEY = "BJ1AY9adlj1GXshhRUKNayiu_3efECYf3oNKkISviNVrTRjuBSLhGq7bf1Wf5YEPH408B01Nn";
+export const VAPID_PUBLIC_KEY = "BEXnOv7eRIz9L7U4CDMEYkU5IHitpUx56ac270cl-9mnZA0wUhKcm0UmHZUfc9GZJfX6uwRQI8yYqcpN6ahDzbo";
 
 // ⬇️ Bildirim gönderen sunucunuzun adresi (Netlify'a yükleyince öğrenilir).
 // Örnek: "https://zikir-uygulama.netlify.app/.netlify/functions"
