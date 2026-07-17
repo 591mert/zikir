@@ -83,6 +83,7 @@ exports.handler = async (event) => {
     });
     const pushOpts = { TTL: 300, headers: { Urgency: "high", Topic: "zikir-test" } };
     let sent = 0, errors = 0;
+    const errorDetails = [];
     for (const item of list.blobs) {
       const raw = await store.get(item.key);
       if (!raw) continue;
@@ -93,12 +94,15 @@ exports.handler = async (event) => {
         sent++;
       } catch (e) {
         errors++;
+        if (errorDetails.length < 3) {
+          errorDetails.push({ statusCode: e.statusCode, body: String(e.body || e.message || e).slice(0, 200) });
+        }
         if (e.statusCode === 410 || e.statusCode === 404) await store.delete(item.key);
       }
     }
     return {
       statusCode: 200,
-      body: JSON.stringify({ ok: true, mode: "test", sent, errors, subscribers: list.blobs.length }),
+      body: JSON.stringify({ ok: true, mode: "test", sent, errors, subscribers: list.blobs.length, firstErrors: errorDetails }),
       headers: { "Content-Type": "application/json", ...cors },
     };
   }
