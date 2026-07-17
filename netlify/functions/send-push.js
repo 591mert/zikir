@@ -5,7 +5,7 @@ const TIMEZONE = "Europe/Istanbul";
 
 const PUBLIC_KEY = process.env.VAPID_PUBLIC_KEY;
 const PRIVATE_KEY = process.env.VAPID_PRIVATE_KEY;
-const rawSubject = process.env.VAPID_SUBJECT || "admin@zikir.app";
+const rawSubject = process.env.VAPID_SUBJECT || "mailto:admin@zikir.app";
 const SUBJECT = rawSubject.startsWith("mailto:") ? rawSubject : `mailto:${rawSubject}`;
 
 if (PUBLIC_KEY && PRIVATE_KEY) {
