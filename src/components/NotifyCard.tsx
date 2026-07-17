@@ -45,9 +45,15 @@ export default function NotifyCard({
     try {
       const resp = await fetch(`${PUSH_BACKEND_URL}/send-push?test=1`);
       const data = await resp.json();
-      setServerTestResult(data.ok
+      let msg = data.ok
         ? `✅ Sunucu: ${data.sent} bildirim gönderildi (${data.subscribers} abone)`
-        : `❌ Sunucu hatası: ${JSON.stringify(data)}`);
+        : `❌ Sunucu hatası`;
+      if (data.firstErrors?.length) {
+        msg += `\nİlk hata: ${data.firstErrors.map((e: {statusCode?: number; body?: string}) => `[${e.statusCode}] ${e.body}`).join(" | ")}`;
+      } else if (!data.ok) {
+        msg += `: ${JSON.stringify(data)}`;
+      }
+      setServerTestResult(msg);
     } catch (e) {
       setServerTestResult(`❌ Bağlantı hatası: ${e instanceof Error ? e.message : e}`);
     }
@@ -239,7 +245,7 @@ export default function NotifyCard({
         )}
 
         {serverTestResult && (
-          <div className={"rounded-2xl p-3 text-sm ring-1 " + (serverTestResult.startsWith("✅") ? "bg-emerald-50 text-emerald-700 ring-emerald-200" : "bg-red-50 text-red-700 ring-red-200")}>
+          <div className={"whitespace-pre-wrap rounded-2xl p-3 text-sm ring-1 " + (serverTestResult.startsWith("✅") ? "bg-emerald-50 text-emerald-700 ring-emerald-200" : "bg-red-50 text-red-700 ring-red-200")}>
             {serverTestResult}
           </div>
         )}
