@@ -1,45 +1,47 @@
-// ============================================================================
-//  /unsubscribe — Telefon hatırlatmaları kapatınca aboneliği siler
-// ============================================================================
-import { getStore } from "@netlify/blobs";
+const { getStore } = require("@netlify/blobs");
 
-export default async (req) => {
+exports.handler = async (event) => {
   const cors = {
     "Access-Control-Allow-Origin": "*",
     "Access-Control-Allow-Methods": "POST, OPTIONS",
     "Access-Control-Allow-Headers": "Content-Type",
   };
 
-  if (req.method === "OPTIONS") {
-    return new Response("", { status: 204, headers: cors });
+  if (event.httpMethod === "OPTIONS") {
+    return { statusCode: 204, headers: cors };
   }
-  if (req.method !== "POST") {
-    return new Response(JSON.stringify({ error: "Sadece POST" }), {
-      status: 405,
+  if (event.httpMethod !== "POST") {
+    return {
+      statusCode: 405,
+      body: JSON.stringify({ error: "Sadece POST" }),
       headers: { "Content-Type": "application/json", ...cors },
-    });
+    };
   }
 
   try {
-    const body = await req.json();
+    const body = JSON.parse(event.body);
     const endpoint = body.endpoint;
     if (!endpoint) {
-      return new Response(JSON.stringify({ error: "endpoint eksik" }), {
-        status: 400,
+      return {
+        statusCode: 400,
+        body: JSON.stringify({ error: "Endpoint gerekli" }),
         headers: { "Content-Type": "application/json", ...cors },
-      });
+      };
     }
+
     const store = getStore("subscriptions");
     await store.delete(endpoint);
 
-    return new Response(JSON.stringify({ ok: true }), {
-      status: 200,
+    return {
+      statusCode: 200,
+      body: JSON.stringify({ ok: true }),
       headers: { "Content-Type": "application/json", ...cors },
-    });
+    };
   } catch (e) {
-    return new Response(JSON.stringify({ error: String(e) }), {
-      status: 500,
+    return {
+      statusCode: 500,
+      body: JSON.stringify({ error: String(e) }),
       headers: { "Content-Type": "application/json", ...cors },
-    });
+    };
   }
 };

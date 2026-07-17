@@ -1,38 +1,34 @@
-// ============================================================================
-//  /subscribe — Telefon bu cihazı push bildirimlerine abone yapar
-//  Telefon, ilini ve hatırlatma süresini buraya gönderir; biz saklarız.
-// ============================================================================
-import { getStore } from "@netlify/blobs";
+const { getStore } = require("@netlify/blobs");
 
-export default async (req) => {
-  // CORS başlıkları (telefonun başka adresten istek atabilmesi için)
+exports.handler = async (event) => {
   const cors = {
     "Access-Control-Allow-Origin": "*",
     "Access-Control-Allow-Methods": "POST, OPTIONS",
     "Access-Control-Allow-Headers": "Content-Type",
   };
 
-  if (req.method === "OPTIONS") {
-    return new Response("", { status: 204, headers: cors });
+  if (event.httpMethod === "OPTIONS") {
+    return { statusCode: 204, headers: cors };
   }
-  if (req.method !== "POST") {
-    return new Response(JSON.stringify({ error: "Sadece POST" }), {
-      status: 405,
+  if (event.httpMethod !== "POST") {
+    return {
+      statusCode: 405,
+      body: JSON.stringify({ error: "Sadece POST" }),
       headers: { "Content-Type": "application/json", ...cors },
-    });
+    };
   }
 
   try {
-    const body = await req.json();
+    const body = JSON.parse(event.body);
     const subscription = body.subscription;
     if (!subscription || !subscription.endpoint) {
-      return new Response(JSON.stringify({ error: "Abonelik eksik" }), {
-        status: 400,
+      return {
+        statusCode: 400,
+        body: JSON.stringify({ error: "Abonelik eksik" }),
         headers: { "Content-Type": "application/json", ...cors },
-      });
+      };
     }
 
-    // Aboneliği sakla (anahtar = cihazın endpoint adresi)
     const store = getStore("subscriptions");
     const record = {
       subscription,
@@ -41,19 +37,20 @@ export default async (req) => {
       lng: body.lng,
       offsetMinutes: body.offsetMinutes ?? 10,
       createdAt: Date.now(),
-      // Bugün hangi vakitler için bildirim gönderildi (tekrar göndermeme)
       sent: {},
     };
     await store.set(subscription.endpoint, JSON.stringify(record));
 
-    return new Response(JSON.stringify({ ok: true }), {
-      status: 200,
+    return {
+      statusCode: 200,
+      body: JSON.stringify({ ok: true }),
       headers: { "Content-Type": "application/json", ...cors },
-    });
+    };
   } catch (e) {
-    return new Response(JSON.stringify({ error: String(e) }), {
-      status: 500,
+    return {
+      statusCode: 500,
+      body: JSON.stringify({ error: String(e) }),
       headers: { "Content-Type": "application/json", ...cors },
-    });
+    };
   }
 };
