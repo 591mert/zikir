@@ -1,5 +1,12 @@
 const { getStore } = require("@netlify/blobs");
 
+function getBlobStore() {
+  const siteID = process.env.SITE_ID || process.env.NETLIFY_SITE_ID;
+  const token = process.env.NETLIFY_ACCESS_TOKEN;
+  if (siteID && token) return getStore("subscriptions", { siteID, token });
+  return getStore("subscriptions");
+}
+
 exports.handler = async (event) => {
   const cors = {
     "Access-Control-Allow-Origin": "*",
@@ -29,7 +36,7 @@ exports.handler = async (event) => {
       };
     }
 
-    const store = getStore("subscriptions");
+    const store = getBlobStore();
     await store.delete(endpoint);
 
     return {

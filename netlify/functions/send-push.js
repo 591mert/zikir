@@ -11,6 +11,13 @@ function getVapid() {
   };
 }
 
+function getBlobStore() {
+  const siteID = process.env.SITE_ID || process.env.NETLIFY_SITE_ID;
+  const token = process.env.NETLIFY_ACCESS_TOKEN;
+  if (siteID && token) return getStore("subscriptions", { siteID, token });
+  return getStore("subscriptions");
+}
+
 function istanbulNowHHMM() {
   const fmt = new Intl.DateTimeFormat("en-GB", {
     timeZone: TIMEZONE, hour: "2-digit", minute: "2-digit", hour12: false,
@@ -64,7 +71,7 @@ exports.handler = async (event) => {
 
   webpush.setVapidDetails(`mailto:${SUBJECT}`, PUBLIC_KEY, PRIVATE_KEY);
 
-  const store = getStore("subscriptions");
+  const store = getBlobStore();
   const list = await store.list();
   const isTest = (event.queryStringParameters && event.queryStringParameters.test === "1");
 
