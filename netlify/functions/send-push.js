@@ -3,13 +3,12 @@ const webpush = require("web-push");
 
 const TIMEZONE = "Europe/Istanbul";
 
-const PUBLIC_KEY = process.env.VAPID_PUBLIC_KEY;
-const PRIVATE_KEY = process.env.VAPID_PRIVATE_KEY;
-const rawSubject = process.env.VAPID_SUBJECT || "mailto:admin@zikir.app";
-const SUBJECT = rawSubject.startsWith("mailto:") ? rawSubject : `mailto:${rawSubject}`;
-
-if (PUBLIC_KEY && PRIVATE_KEY) {
-  webpush.setVapidDetails(SUBJECT, PUBLIC_KEY, PRIVATE_KEY);
+function getVapid() {
+  return {
+    PUBLIC_KEY: process.env.VAPID_PUBLIC_KEY,
+    PRIVATE_KEY: process.env.VAPID_PRIVATE_KEY,
+    SUBJECT: (process.env.VAPID_SUBJECT || "mailto:admin@zikir.app").replace(/^mailto:/, ""),
+  };
 }
 
 function istanbulNowHHMM() {
@@ -53,6 +52,7 @@ function toMinutes(hhmm) {
 
 exports.handler = async (event) => {
   const cors = { "Access-Control-Allow-Origin": "*" };
+  const { PUBLIC_KEY, PRIVATE_KEY, SUBJECT } = getVapid();
 
   if (!PUBLIC_KEY || !PRIVATE_KEY) {
     return {
@@ -61,6 +61,8 @@ exports.handler = async (event) => {
       headers: { "Content-Type": "application/json", ...cors },
     };
   }
+
+  webpush.setVapidDetails(`mailto:${SUBJECT}`, PUBLIC_KEY, PRIVATE_KEY);
 
   const store = getStore("subscriptions");
   const list = await store.list();
