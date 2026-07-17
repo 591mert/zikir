@@ -97,7 +97,10 @@ exports.handler = async (event) => {
         if (errorDetails.length < 3) {
           errorDetails.push({ statusCode: e.statusCode, body: String(e.body || e.message || e).slice(0, 200) });
         }
-        if (e.statusCode === 410 || e.statusCode === 404) await store.delete(item.key);
+        // VAPID anahtar uyuşmazlığı veya abonelik süresi dolmuş → temizle
+        if (e.statusCode === 403 || e.statusCode === 410 || e.statusCode === 404) {
+          await store.delete(item.key);
+        }
       }
     }
     return {
@@ -138,7 +141,7 @@ exports.handler = async (event) => {
             results.sent++;
           } catch (e) {
             results.errors++;
-            if (e.statusCode === 410 || e.statusCode === 404) await store.delete(item.key);
+            if (e.statusCode === 403 || e.statusCode === 410 || e.statusCode === 404) await store.delete(item.key);
           }
         }
       }
