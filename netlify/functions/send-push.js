@@ -95,7 +95,7 @@ exports.handler = async (event) => {
 
   const nowMin = toMinutes(istanbulNowHHMM());
   const today = istanbulToday();
-  const results = { checked: 0, sent: 0, errors: 0, details: [] };
+  const results = { checked: 0, sent: 0, errors: 0 };
 
   for (const item of list.blobs) {
     const raw = await store.get(item.key);
@@ -121,7 +121,6 @@ exports.handler = async (event) => {
             await webpush.sendNotification(rec.subscription, payload);
             rec.sent[p.key] = today;
             results.sent++;
-            results.details.push(`${rec.city} - ${p.name}`);
           } catch (e) {
             results.errors++;
             if (e.statusCode === 410 || e.statusCode === 404) await store.delete(item.key);
