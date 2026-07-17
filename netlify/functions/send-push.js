@@ -201,7 +201,5 @@ export default async (req) => {
   });
 };
 
-// Cron tetikleyici yapılandırması (Netlify Scheduled Functions)
-export const config = {
-  schedule: "* * * * *", // Her dakika
-};
+// Cron tetikleyici: cron-job.org üzerinden her dakika çağrılıyor
+// (Netlify Scheduled Functions kullanılmıyor)
