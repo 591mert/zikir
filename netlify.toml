@@ -3,17 +3,9 @@
 # ============================================================================
 
 [build]
-  # Statik site (frontend) dist klasöründen yayınlanır
   command = "npm run build"
   publish = "dist"
-  # Sunucu fonksiyonları bu klasörde
   functions = "netlify/functions"
-
-[build.environment]
-  # Node sürümünü LTS (22) yap (exit 127 hatasını çözer)
-  NODE_VERSION = "22"
-  # Bağımlılıkları temiz kur
-  NPM_FLAGS = "--legacy-peer-deps"
 
 # Not: Namaz vakti bildirimlerini gönderen "send-push" fonksiyonu
 # dakikada bir tetiklenmelidir. Bunu iki yoldan biriyle yapabilirsiniz:
