@@ -81,7 +81,7 @@ exports.handler = async (event) => {
       body: "Bu bildirim sunucudan geldi. Namaz vakti hatırlatmaları çalışıyor!",
       tag: "push-test", data: { url: "./" },
     });
-    const pushOpts = { TTL: 0, headers: { Urgency: "high", Topic: "zikir-test" } };
+    const pushOpts = { TTL: 300, headers: { Urgency: "high", Topic: "zikir-test" } };
     let sent = 0, errors = 0;
     for (const item of list.blobs) {
       const raw = await store.get(item.key);
@@ -127,7 +127,7 @@ exports.handler = async (event) => {
             body: offset > 0 ? `${p.time} · ${p.name} vaktine ${offset} dakika kaldı.` : `${p.time} · ${p.name} vakti girdi, inşallah.`,
             tag: `prayer-${p.key}`, sound: "./notification.mp3", data: { url: "./", prayer: p.key },
           });
-          const pushOpts = { TTL: 0, headers: { Urgency: "high", Topic: `zikir-${p.key}` } };
+          const pushOpts = { TTL: 300, headers: { Urgency: "high", Topic: `zikir-${p.key}` } };
           try {
             await webpush.sendNotification(rec.subscription, payload, pushOpts);
             rec.sent[p.key] = today;

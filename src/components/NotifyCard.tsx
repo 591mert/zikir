@@ -1,11 +1,13 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Card, Pill } from "@/components/ui";
 import { playPrayerChime, primeAudio, vibratePrayerPattern } from "@/lib/sound";
+import { PUSH_BACKEND_URL } from "@/lib/pushConfig";
 import {
   OFFSET_OPTIONS,
   notifySupported,
   permissionState,
   pushReady,
+  pushSupported,
   requestNotifyPermission,
   sendTestNotification,
   subscribePush,
@@ -24,8 +26,33 @@ export default function NotifyCard({
 }) {
   const [perm, setPerm] = useState<NotificationPermission>(permissionState());
   const [busy, setBusy] = useState(false);
+  const [subscribed, setSubscribed] = useState(false);
+  const [serverTestResult, setServerTestResult] = useState<string | null>(null);
+  const [serverTestBusy, setServerTestBusy] = useState(false);
   const supported = notifySupported();
-  const pushOn = pushReady(); // uygulama kapalıyken de çalışacak mod hazır mı?
+  const pushOn = pushReady();
+
+  useEffect(() => {
+    if (!pushSupported()) { setSubscribed(false); return; }
+    navigator.serviceWorker.ready.then(reg =>
+      reg.pushManager.getSubscription().then(s => setSubscribed(s != null))
+    ).catch(() => setSubscribed(false));
+  }, [settings.enabled]);
+
+  async function testServerPush() {
+    setServerTestBusy(true);
+    setServerTestResult(null);
+    try {
+      const resp = await fetch(`${PUSH_BACKEND_URL}/send-push?test=1`);
+      const data = await resp.json();
+      setServerTestResult(data.ok
+        ? `✅ Sunucu: ${data.sent} bildirim gönderildi (${data.subscribers} abone)`
+        : `❌ Sunucu hatası: ${JSON.stringify(data)}`);
+    } catch (e) {
+      setServerTestResult(`❌ Bağlantı hatası: ${e instanceof Error ? e.message : e}`);
+    }
+    setServerTestBusy(false);
+  }
 
   async function toggle() {
     if (!settings.enabled) {
@@ -158,9 +185,23 @@ export default function NotifyCard({
           </div>
         )}
 
-        {/* Test bildirimi, ses ve titreşim önizleme */}
+        {/* Abonelik durumu */}
+        {settings.enabled && !blocked && pushOn && (
+          <div className={"rounded-2xl p-3 ring-1 " + (subscribed ? "bg-emerald-50 ring-emerald-200" : "bg-amber-50 ring-amber-200")}>
+            <p className={"text-sm font-bold " + (subscribed ? "text-emerald-700" : "text-amber-700")}>
+              {subscribed ? "✅ Sunucuya abone" : "⏳ Sunucuya abone olunuyor…"}
+            </p>
+            <p className="mt-0.5 text-xs text-nuur-500">
+              {subscribed
+                ? "Cihazınız push bildirimlerine kayıtlı. Uygulama kapalıyken bildirim alabilirsiniz."
+                : "Abonelik henüz tamamlanmadı. Sayfayı yenileyip tekrar açmayı deneyin."}
+            </p>
+          </div>
+        )}
+
+        {/* Test bildirimi, ses, titreşim ve sunucu testi */}
         {settings.enabled && !blocked && (
-          <div className="grid grid-cols-3 gap-2">
+          <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
             <button
               onClick={() => sendTestNotification()}
               className="flex items-center justify-center gap-1 rounded-2xl bg-white px-2 py-3 text-sm font-bold text-nuur-700 ring-1 ring-black/5"
@@ -185,6 +226,21 @@ export default function NotifyCard({
             >
               📳 Titreşim
             </button>
+            {pushOn && (
+              <button
+                onClick={testServerPush}
+                disabled={serverTestBusy}
+                className="flex items-center justify-center gap-1 rounded-2xl bg-white px-2 py-3 text-sm font-bold text-nuur-700 ring-1 ring-black/5 disabled:opacity-50"
+              >
+                {serverTestBusy ? "⏳" : "📡"} Sunucu
+              </button>
+            )}
+          </div>
+        )}
+
+        {serverTestResult && (
+          <div className={"rounded-2xl p-3 text-sm ring-1 " + (serverTestResult.startsWith("✅") ? "bg-emerald-50 text-emerald-700 ring-emerald-200" : "bg-red-50 text-red-700 ring-red-200")}>
+            {serverTestResult}
           </div>
         )}
 
