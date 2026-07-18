@@ -102,25 +102,6 @@ export default function NotifyCard({
           </div>
         )}
 
-        {/* Push modu bilgisi */}
-        <div
-          className={
-            "rounded-2xl p-4 ring-1 " +
-            (pushOn
-              ? "bg-emerald-50 ring-emerald-200"
-              : "bg-gold-300/20 ring-gold-300/50")
-          }
-        >
-          <p className={"text-base font-bold " + (pushOn ? "text-emerald-700" : "text-gold-600")}>
-            {pushOn ? "Kapalıyken de çalışır" : "🟡 Sadece uygulama açıkken"}
-          </p>
-          <p className="mt-1 text-sm leading-relaxed text-nuur-600">
-            {pushOn
-              ? "Bu cihaz tam push desteğine sahip. Uygulama kapalı bile olsa her namaz vaktinde bildirim gelir. (Sunucu bağlantısı gerekir.)"
-              : "Bu cihaz/tarayıcı tam push'u desteklemiyor veya sunucu henüz bağlı değil. Uygulama açıkken hatırlatmalar çalışır. Tam destek için aşağıdaki yönergeyi izleyin."}
-          </p>
-        </div>
-
         {/* Aç/Kapa düğmesi */}
         <button
           onClick={toggle}
